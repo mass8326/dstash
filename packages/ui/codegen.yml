@@ -1,0 +1,13 @@
+schema: "./src/routes/graphql/.schema"
+documents: null # "./src/routes/**"
+generates:
+  node_modules/.generated/types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+      - add:
+          content: "// @ts-nocheck"
+    config:
+      useIndexSignature: true
+      defaultMapper: Partial<{T}>
+      showUnusedMappers: true

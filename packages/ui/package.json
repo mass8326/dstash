@@ -1,0 +1,42 @@
+{
+  "name": "dstash-ui",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview",
+    "prepare": "playwright install && svelte-kit sync",
+    "test": "playwright test",
+    "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
+    "lint": "gulp lint --silent"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^16.2.1",
+    "@mikro-orm/better-sqlite": "^5.1.0",
+    "@mikro-orm/cli": "^5.1.0",
+    "@mikro-orm/core": "^5.1.0",
+    "@mikro-orm/reflection": "^5.1.0",
+    "@playwright/test": "^1.20.0",
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "@types/lodash": "^4.14.180",
+    "@types/node": "^17.0.21",
+    "better-sqlite3": "^7.5.0",
+    "commitlint": "^16.2.3",
+    "dstash-config": "workspace:*",
+    "eslint": "^7.32.0",
+    "gulp": "^4.0.2",
+    "husky": "^7.0.4",
+    "lodash": "^4.17.21",
+    "prettier": "^2.6.0",
+    "prettier-plugin-svelte": "2.6.0",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.2.6",
+    "svelte-preprocess": "^4.10.1",
+    "ts-node": "^10.7.0",
+    "tslib": "^2.3.1",
+    "typescript": "~4.6.2"
+  }
+}

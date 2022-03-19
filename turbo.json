@@ -1,0 +1,18 @@
+{
+  "pipeline": {
+    "dev": {
+      "cache": false
+    },
+    "format": {
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["format"],
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    }
+  }
+}
