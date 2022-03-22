@@ -11,7 +11,11 @@
       "outputs": []
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["lint", "^build"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["lint"],
       "outputs": []
     }
   }

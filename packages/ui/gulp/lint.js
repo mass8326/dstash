@@ -12,7 +12,7 @@ const eslint = () =>
   spawn(
     cmd.pnpx,
     ["eslint", "--ignore-path", "../../.gitignore", "--fix", "."],
-    { stdio: "inherit" }
+    { env: { ...process.env, TIMING: 1 }, stdio: "inherit" }
   );
 
 export const lint = gulp.parallel(svelte, eslint);

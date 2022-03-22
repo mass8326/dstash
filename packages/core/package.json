@@ -5,7 +5,7 @@
     "dev": "tsc && dotenv -e ../../.env -- nodemon -- src/app.ts --transpile-only",
     "migrate": "mikro-orm migration:create --path src/migrations",
     "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
-    "lint": "eslint --ignore-path ../../.gitignore --fix .",
+    "lint": "cross-env TIMING=1 eslint --ignore-path ../../.gitignore --fix .",
     "build": "tsc"
   },
   "mikro-orm": {
@@ -34,6 +34,7 @@
     "@types/node": "^17.0.22",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
+    "cross-env": "^7.0.3",
     "dotenv-cli": "^5.0.0",
     "dstash-config": "workspace:^0.0.1",
     "eslint": "^8.11.0",
