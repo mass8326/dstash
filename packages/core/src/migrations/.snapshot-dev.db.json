@@ -1,0 +1,30 @@
+{
+  "namespaces": [],
+  "tables": [
+    {
+      "columns": {
+        "hash": {
+          "name": "hash",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        }
+      },
+      "name": "node",
+      "indexes": [
+        {
+          "keyName": "primary",
+          "columnNames": ["hash"],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    }
+  ]
+}
