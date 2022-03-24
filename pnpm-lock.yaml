@@ -56,6 +56,7 @@ importers:
       '@nestjs/core': ^8.4.2
       '@nestjs/platform-fastify': ^8.4.2
       '@nestjs/testing': ^8.4.2
+      '@types/fs-extra': ^9.0.13
       '@types/jest': ^27.4.1
       '@types/lodash': ^4.14.180
       '@types/node': ^17.0.22
@@ -69,6 +70,7 @@ importers:
       eslint-config-prettier: ^8.3.0
       eslint-plugin-import: ^2.25.4
       eslint-plugin-unicorn: ^41.0.1
+      fs-extra: ^10.0.1
       jest: ^27.5.1
       lodash: ^4.17.21
       nodemon: ^2.0.15
@@ -92,6 +94,7 @@ importers:
       '@nestjs/common': 8.4.2_e7ea248743279784063e3708d703abc5
       '@nestjs/core': 8.4.2_f0f7bf27b9dd8662d8de3791cddb8c93
       '@nestjs/platform-fastify': 8.4.2_44cf05fcc0e49f3653826a45aec0eb54
+      fs-extra: 10.0.1
       reflect-metadata: 0.1.13
       rxjs: 7.5.5
       typescript: 4.6.2
@@ -99,6 +102,7 @@ importers:
       '@mikro-orm/cli': 5.1.1_93c321ebdf40b709b0eea23402947bab
       '@nestjs/cli': 8.2.4
       '@nestjs/testing': 8.4.2_44cf05fcc0e49f3653826a45aec0eb54
+      '@types/fs-extra': 9.0.13
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.180
       '@types/node': 17.0.22
@@ -2418,6 +2422,12 @@ packages:
 
   /@types/estree/0.0.51:
     resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+    dev: true
+
+  /@types/fs-extra/9.0.13:
+    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
+    dependencies:
+      '@types/node': 17.0.22
     dev: true
 
   /@types/graceful-fs/4.1.5:

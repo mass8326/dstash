@@ -11,10 +11,35 @@
           "primary": false,
           "nullable": false,
           "mappedType": "text"
+        },
+        "path": {
+          "name": "path",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "ext": {
+          "name": "ext",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "text"
         }
       },
       "name": "node",
       "indexes": [
+        {
+          "columnNames": ["path"],
+          "composite": false,
+          "keyName": "node_path_unique",
+          "primary": false,
+          "unique": true
+        },
         {
           "keyName": "primary",
           "columnNames": ["hash"],
