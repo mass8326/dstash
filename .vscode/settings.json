@@ -1,0 +1,4 @@
+{
+  "editor.rulers": [80],
+  "eslint.rules.customizations": [{ "rule": "import/order", "severity": "off" }]
+}
