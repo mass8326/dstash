@@ -1,0 +1,9 @@
+{
+  "extends": "./node_modules/dstash-config/node.tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
