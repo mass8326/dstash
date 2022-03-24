@@ -1,16 +1,13 @@
 import crypto from "crypto";
 import fs from "fs/promises";
 import { resolve } from "path";
-import { EntityRepository } from "@mikro-orm/core";
-import { InjectRepository } from "@mikro-orm/nestjs";
 import { Injectable } from "@nestjs/common";
 import { Node } from "../node/node.entity";
+import { NodeService } from "../node/node.service";
 
 @Injectable()
 export class StashService {
-  constructor(
-    @InjectRepository(Node) private nodeRep: EntityRepository<Node>
-  ) {}
+  constructor(private nodeSvc: NodeService) {}
 
   async consume() {
     const dropoff = resolve(process.env.STASH_DIR ?? "stash", "dropoff");
@@ -22,12 +19,10 @@ export class StashService {
           .createHash("sha256")
           .update(await fs.readFile(path))
           .digest("hex");
-        const node = new Node(hash);
-        await this.nodeRep.persist(node);
-        return node;
+        return new Node(hash);
       })
     );
-    this.nodeRep.flush();
+    this.nodeSvc.write(nodes);
     return nodes;
   }
 }

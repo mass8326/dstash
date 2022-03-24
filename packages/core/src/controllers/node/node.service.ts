@@ -6,11 +6,14 @@ import { Node } from "./node.entity";
 @Injectable()
 export class NodeService {
   constructor(
-    @InjectRepository(Node) private nodeRep: EntityRepository<Node> // private readonly em: EntityManager
+    @InjectRepository(Node) private nodeRep: EntityRepository<Node>
   ) {}
 
   findAll() {
     return this.nodeRep.findAll();
-    // return this.em.getRepository(Node).findAll();
+  }
+
+  write(input: Node | Node[]) {
+    return this.nodeRep.persist(input).flush();
   }
 }
