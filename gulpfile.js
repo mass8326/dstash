@@ -25,7 +25,6 @@ const deps = async () => {
     `${pkg.name}@${pkg.version}`,
     ...workspace.map(({ manifest }) => `${manifest.name}@${manifest.version}`),
   ].join(";");
-  console.log(pkgs);
   return new Promise((resolve, reject) =>
     checker.init(
       {
@@ -33,10 +32,13 @@ const deps = async () => {
         onlyAllow: whitelist.join(";"),
         excludePackages: pkgs,
       },
-      (err) => (err ? reject() : resolve())
+      (err) => (err ? reject(err) : resolve())
     )
   );
 };
-const turbo = () => spawn(cmd.pnpx, ["turbo", "run", "lint"], { stdio: "inherit" });
+const turbo = () =>
+  spawn(cmd.pnpx, ["turbo", "run", "lint", "--since=HEAD", "--concurrency=1"], {
+    stdio: "inherit",
+  });
 
-exports.check = parallel(deps, turbo);
+exports.lint = parallel(deps, turbo);

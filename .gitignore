@@ -1,3 +1,5 @@
+# Any changes should be copied to .prettierignore
+
 # Secret
 .env
 .env.*

@@ -10,7 +10,7 @@
     "prepare": "playwright install && svelte-kit sync",
     "test": "playwright test",
     "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
-    "lint": "gulp lint --silent"
+    "lint": "svelte-check --tsconfig ./tsconfig.json --threshold error && lint-staged"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^16.2.1",
@@ -26,12 +26,9 @@
     "better-sqlite3": "^7.5.0",
     "commitlint": "^16.2.3",
     "dstash-config": "workspace:*",
-    "eslint": "^7.32.0",
     "gulp": "^4.0.2",
     "husky": "^7.0.4",
     "lodash": "^4.17.21",
-    "prettier": "^2.6.0",
-    "prettier-plugin-svelte": "2.6.0",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.10.1",

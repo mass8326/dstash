@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es2022",
+    "strict": true,
+    "incremental": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true
+  }
+}

@@ -1,17 +1,12 @@
 {
+  "extends": "./node_modules/dstash-config/node.tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2017",
-    "moduleResolution": "node",
     "types": ["webpack-env"],
-    "declaration": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "esModuleInterop": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "strict": true,
-    "incremental": true
+    "experimentalDecorators": true
   },
   "include": ["src"]
 }
