@@ -1,29 +1,35 @@
 import type { BetterSqliteDriver } from "@mikro-orm/better-sqlite";
 import { resolve, basename } from "path";
-import { Options } from "@mikro-orm/core";
+import { MigrationsOptions, Options } from "@mikro-orm/core";
 import { Migration } from "@mikro-orm/migrations";
 import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
 
 const dbName = process.env.STASH_DIR
   ? resolve(process.env.STASH_DIR, "data.db")
   : "dev.db";
-console.log(`Using ${dbName}`);
 
-// Webpack workaround to import all migrations from folder
-const context = require.context("../migrations", false, /\.ts$/);
-const migrationsList = context.keys().map((key) => {
-  const constructor = Object.values(context(key))[0] as new () => Migration;
-  return {
-    name: basename(key),
-    class: constructor,
-  };
-});
+// Webpack dev server workaround to import all migrations from folder
+const migrations: MigrationsOptions = module.hot
+  ? (() => {
+      const context = require.context("./migrations", false, /\.ts$/);
+      const migrationsList = context.keys().map((key) => {
+        const constructor = Object.values(
+          context(key)
+        )[0] as new () => Migration;
+        return {
+          name: basename(key),
+          class: constructor,
+        };
+      });
+      return { migrationsList };
+    })()
+  : { path: "./dist/migrations", pathTs: "./src/migrations" };
 
 const config: Options<BetterSqliteDriver> = {
   // Database
   dbName,
   type: "better-sqlite",
-  migrations: { migrationsList },
+  migrations,
   // Entities
   entities: ["./dist/**/*.entity.js"],
   entitiesTs: ["./src/**/*.entity.ts"],

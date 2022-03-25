@@ -2,11 +2,11 @@
   "name": "dstash-core",
   "version": "0.0.1",
   "scripts": {
-    "dev": "dotenv -e ../../.env -- nest build --webpack --webpackPath webpack-hmr.config.js --watch",
+    "dev": "dotenv -v NODE_ENV=development -e ../../.env -- nest build --webpack --webpackPath webpack-hmr.config.js --watch",
     "migrate": "mikro-orm migration:create --path src/migrations",
     "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
     "lint": "lint-staged",
-    "build": "nest build --webpack"
+    "build": "dotenv -e .env.build -- rollup -c && tsc -p src/migrations"
   },
   "mikro-orm": {
     "useTsNode": true,
@@ -35,6 +35,9 @@
     "@mikro-orm/cli": "^5.1.1",
     "@nestjs/cli": "^8.2.4",
     "@nestjs/testing": "^8.4.2",
+    "@rollup/plugin-commonjs": "^21.0.2",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-typescript": "^8.3.1",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.180",
@@ -44,14 +47,17 @@
     "dotenv-cli": "^5.0.0",
     "dstash-config": "workspace:^0.0.1",
     "electron": "^17.1.2",
+    "esbuild": "^0.14.27",
     "jest": "^27.5.1",
     "lodash": "^4.17.21",
     "nestjs-electron-ipc-transport": "^1.0.2",
     "nodemon": "^2.0.15",
+    "rollup": "^2.70.1",
     "run-script-webpack-plugin": "^0.0.11",
     "terser-webpack-plugin": "^5.3.1",
     "ts-loader": "^9.2.8",
     "ts-node": "^10.7.0",
+    "tslib": "^2.3.1",
     "webpack": "^5.70.0",
     "webpack-node-externals": "^3.0.0"
   },

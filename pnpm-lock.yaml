@@ -65,6 +65,9 @@ importers:
       '@nestjs/microservices': ^8.4.2
       '@nestjs/platform-fastify': ^8.4.2
       '@nestjs/testing': ^8.4.2
+      '@rollup/plugin-commonjs': ^21.0.2
+      '@rollup/plugin-replace': ^4.0.0
+      '@rollup/plugin-typescript': ^8.3.1
       '@types/fs-extra': ^9.0.13
       '@types/jest': ^27.4.1
       '@types/lodash': ^4.14.180
@@ -74,17 +77,20 @@ importers:
       dotenv-cli: ^5.0.0
       dstash-config: workspace:^0.0.1
       electron: ^17.1.2
+      esbuild: ^0.14.27
       fs-extra: ^10.0.1
       jest: ^27.5.1
       lodash: ^4.17.21
       nestjs-electron-ipc-transport: ^1.0.2
       nodemon: ^2.0.15
       reflect-metadata: ^0.1.13
+      rollup: ^2.70.1
       run-script-webpack-plugin: ^0.0.11
       rxjs: ^7.5.5
       terser-webpack-plugin: ^5.3.1
       ts-loader: ^9.2.8
       ts-node: ^10.7.0
+      tslib: ^2.3.1
       typescript: 4.6.2
       webpack: ^5.70.0
       webpack-node-externals: ^3.0.0
@@ -105,8 +111,11 @@ importers:
       typescript: 4.6.2
     devDependencies:
       '@mikro-orm/cli': 5.1.1_93c321ebdf40b709b0eea23402947bab
-      '@nestjs/cli': 8.2.4
+      '@nestjs/cli': 8.2.4_esbuild@0.14.27
       '@nestjs/testing': 8.4.2_7623a3dd133387c9d49715d474f02d85
+      '@rollup/plugin-commonjs': 21.0.2_rollup@2.70.1
+      '@rollup/plugin-replace': 4.0.0_rollup@2.70.1
+      '@rollup/plugin-typescript': 8.3.1_859e05ab655ea3c900a5f26a0311c0b5
       '@types/fs-extra': 9.0.13
       '@types/jest': 27.4.1
       '@types/lodash': 4.14.180
@@ -116,15 +125,18 @@ importers:
       dotenv-cli: 5.0.0
       dstash-config: link:../config
       electron: 17.2.0
+      esbuild: 0.14.27
       jest: 27.5.1_ts-node@10.7.0
       lodash: 4.17.21
       nestjs-electron-ipc-transport: 1.0.2_electron@17.2.0
       nodemon: 2.0.15
+      rollup: 2.70.1
       run-script-webpack-plugin: 0.0.11
-      terser-webpack-plugin: 5.3.1_webpack@5.70.0
+      terser-webpack-plugin: 5.3.1_esbuild@0.14.27+webpack@5.70.0
       ts-loader: 9.2.8_typescript@4.6.2+webpack@5.70.0
       ts-node: 10.7.0_5338de7ff0b33ef224ee85855d74b9f4
-      webpack: 5.70.0
+      tslib: 2.3.1
+      webpack: 5.70.0_esbuild@0.14.27
       webpack-node-externals: 3.0.0
 
   packages/electron:
@@ -1825,7 +1837,7 @@ packages:
       ansi-colors: 4.1.1
     dev: false
 
-  /@nestjs/cli/8.2.4:
+  /@nestjs/cli/8.2.4_esbuild@0.14.27:
     resolution: {integrity: sha512-9zNV9oMtaz1vwLO3WXviD0wzRpyiaLWJZ7KCIZLk62U22RDNRsbtLLDS52Wkig5L8UU7Z1xRfrEv+s3f9keysQ==}
     engines: {node: '>= 10.13.0', npm: '>= 6.11.0'}
     hasBin: true
@@ -1850,7 +1862,7 @@ packages:
       tsconfig-paths: 3.14.0
       tsconfig-paths-webpack-plugin: 3.5.2
       typescript: 4.6.2
-      webpack: 5.70.0
+      webpack: 5.70.0_esbuild@0.14.27
       webpack-node-externals: 3.0.0
     transitivePeerDependencies:
       - '@swc/core'
@@ -2310,6 +2322,59 @@ packages:
       write-yaml-file: 4.2.0
     dev: true
 
+  /@rollup/plugin-commonjs/21.0.2_rollup@2.70.1:
+    resolution: {integrity: sha512-d/OmjaLVO4j/aQX69bwpWPpbvI3TJkQuxoAk7BH8ew1PyoMBLTOuvJTjzG8oEoW7drIIqB0KCJtfFLu/2GClWg==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      rollup: ^2.38.3
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.70.1
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      glob: 7.2.0
+      is-reference: 1.2.1
+      magic-string: 0.25.9
+      resolve: 1.22.0
+      rollup: 2.70.1
+    dev: true
+
+  /@rollup/plugin-replace/4.0.0_rollup@2.70.1:
+    resolution: {integrity: sha512-+rumQFiaNac9y64OHtkHGmdjm7us9bo1PlbgQfdihQtuNxzjpaB064HbRnewUOggLQxVCCyINfStkgmBeQpv1g==}
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.70.1
+      magic-string: 0.25.9
+      rollup: 2.70.1
+    dev: true
+
+  /@rollup/plugin-typescript/8.3.1_859e05ab655ea3c900a5f26a0311c0b5:
+    resolution: {integrity: sha512-84rExe3ICUBXzqNX48WZV2Jp3OddjTMX97O2Py6D1KJaGSwWp0mDHXj+bCGNJqWHIEKDIT2U0sDjhP4czKi6cA==}
+    engines: {node: '>=8.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.70.1
+      resolve: 1.22.0
+      rollup: 2.70.1
+      tslib: 2.3.1
+      typescript: 4.6.2
+    dev: true
+
+  /@rollup/pluginutils/3.1.0_rollup@2.70.1:
+    resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    dependencies:
+      '@types/estree': 0.0.39
+      estree-walker: 1.0.1
+      picomatch: 2.3.1
+      rollup: 2.70.1
+    dev: true
+
   /@rollup/pluginutils/4.2.0:
     resolution: {integrity: sha512-2WUyJNRkyH5p487pGnn4tWAsxhEFKN/pT8CMgHshd5H+IXkOnKvKZwsz5ZWz+YCXkleZRAU5kwbfgF8CPfDRqA==}
     engines: {node: '>= 8.0.0'}
@@ -2495,6 +2560,10 @@ packages:
     dependencies:
       '@types/estree': 0.0.51
       '@types/json-schema': 7.0.10
+    dev: true
+
+  /@types/estree/0.0.39:
+    resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
     dev: true
 
   /@types/estree/0.0.51:
@@ -4119,6 +4188,10 @@ packages:
       - '@swc/wasm'
     dev: true
 
+  /commondir/1.0.1:
+    resolution: {integrity: sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=}
+    dev: true
+
   /compare-func/2.0.0:
     resolution: {integrity: sha512-zHig5N+tPWARooBnb0Zx1MFcdfpyJrfTJ3Y5L+IFvUm8rM74hHz66z0gw0x4tijh5CorKkKUCnW82R2vmpeCRA==}
     dependencies:
@@ -5291,6 +5364,10 @@ packages:
     engines: {node: '>=4.0'}
     dev: true
 
+  /estree-walker/1.0.1:
+    resolution: {integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==}
+    dev: true
+
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: true
@@ -5773,7 +5850,7 @@ packages:
       semver: 7.3.5
       tapable: 2.2.1
       typescript: 4.6.2
-      webpack: 5.70.0
+      webpack: 5.70.0_esbuild@0.14.27
     dev: true
 
   /form-data/3.0.1:
@@ -6766,6 +6843,12 @@ packages:
 
   /is-potential-custom-element-name/1.0.1:
     resolution: {integrity: sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ==}
+    dev: true
+
+  /is-reference/1.2.1:
+    resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}
+    dependencies:
+      '@types/estree': 0.0.51
     dev: true
 
   /is-regex/1.1.4:
@@ -10537,7 +10620,7 @@ packages:
       supports-hyperlinks: 2.2.0
     dev: true
 
-  /terser-webpack-plugin/5.3.1_webpack@5.70.0:
+  /terser-webpack-plugin/5.3.1_esbuild@0.14.27+webpack@5.70.0:
     resolution: {integrity: sha512-GvlZdT6wPQKbDNW/GDQzZFg/j4vKU96yl2q6mcUkzKOgW4gwf1Z8cZToUCrz31XHlPWH8MVb1r2tFtdDtTGJ7g==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -10553,12 +10636,13 @@ packages:
       uglify-js:
         optional: true
     dependencies:
+      esbuild: 0.14.27
       jest-worker: 27.5.1
       schema-utils: 3.1.1
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.12.1
-      webpack: 5.70.0
+      webpack: 5.70.0_esbuild@0.14.27
     dev: true
 
   /terser/5.12.1:
@@ -10760,7 +10844,7 @@ packages:
       micromatch: 4.0.4
       semver: 7.3.5
       typescript: 4.6.2
-      webpack: 5.70.0
+      webpack: 5.70.0_esbuild@0.14.27
     dev: true
 
   /ts-morph/14.0.0:
@@ -11407,7 +11491,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /webpack/5.70.0:
+  /webpack/5.70.0_esbuild@0.14.27:
     resolution: {integrity: sha512-ZMWWy8CeuTTjCxbeaQI21xSswseF2oNOwc70QSKNePvmxE7XW36i7vpBMYZFAUHPwQiEbNGCEYIOOlyRbdGmxw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -11438,7 +11522,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.1_webpack@5.70.0
+      terser-webpack-plugin: 5.3.1_esbuild@0.14.27+webpack@5.70.0
       watchpack: 2.3.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
