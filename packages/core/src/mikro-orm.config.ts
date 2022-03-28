@@ -23,7 +23,7 @@ const migrations: MigrationsOptions = module.hot
       });
       return { migrationsList };
     })()
-  : { path: "./dist/migrations", pathTs: "./src/migrations" };
+  : { path: resolve(__dirname, "./migrations") };
 
 const config: Options<BetterSqliteDriver> = {
   // Database
@@ -31,8 +31,7 @@ const config: Options<BetterSqliteDriver> = {
   type: "better-sqlite",
   migrations,
   // Entities
-  entities: ["./dist/**/*.entity.js"],
-  entitiesTs: ["./src/**/*.entity.ts"],
+  entities: [resolve(__dirname, "./**/*.entity.js")],
   // Logging
   highlighter: new SqlHighlighter(),
   debug: true,

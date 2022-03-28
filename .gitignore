@@ -9,6 +9,9 @@
 # Dependencies
 node_modules/
 
+# Development
+dev.db
+
 # Build
 build/
 dist/

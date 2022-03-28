@@ -1,12 +1,13 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { Node } from "../node/node.entity";
 import { StashService } from "./stash.service";
+import { GetSwitch } from "../switch.controller";
 
-@Controller("stash")
+@Controller()
 export class StashController {
   constructor(private stashSvc: StashService) {}
 
-  @Get()
+  @GetSwitch("stash")
   async get(): Promise<Node[]> {
     return this.stashSvc.consume();
   }

@@ -8,13 +8,14 @@ import { Target } from "./config/config.build";
 
 const logger = new Logger("Bootstrap");
 
-async function bootstrap() {
+export async function bootstrap() {
   let app: INestApplication | INestMicroservice;
   if (process.env.BUILD_TARGET === Target.Desktop) {
     app = await NestFactory.createMicroservice(AppModule, {
       strategy: new ElectronIPCTransport(),
     });
-    logger.error("Not yet implemented...");
+    await app.listen();
+    logger.log("dstash-core listening for ipc");
   } else if (process.env.BUILD_TARGET === Target.Server) {
     app = await NestFactory.create(AppModule, new FastifyAdapter());
     const host = process.env.HOST ?? "0.0.0.0";
@@ -30,5 +31,10 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+
+  return app;
 }
-bootstrap();
+
+if (process.env.BUILD_TARGET === Target.Server) bootstrap();
+
+export default { bootstrap };

@@ -1,8 +1,10 @@
 {
   "name": "dstash-core",
   "version": "0.0.1",
+  "main": "dist/main.js",
+  "types": "src/main.ts",
   "scripts": {
-    "dev": "dotenv -v NODE_ENV=development -e ../../.env -- nest build --webpack --webpackPath webpack-hmr.config.js --watch",
+    "dev": "nest build --webpack --webpackPath webpack-hmr.config.js --watch",
     "migrate": "mikro-orm migration:create --path src/migrations",
     "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
     "lint": "lint-staged",

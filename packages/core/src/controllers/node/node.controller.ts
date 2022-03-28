@@ -1,11 +1,12 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { NodeService } from "./node.service";
+import { GetSwitch } from "../switch.controller";
 
-@Controller("node")
+@Controller()
 export class NodeController {
   constructor(private readonly nodeSvc: NodeService) {}
 
-  @Get()
+  @GetSwitch("node")
   findAll() {
     return this.nodeSvc.findAll();
   }

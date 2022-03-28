@@ -1,4 +1,5 @@
 import * as path from "path";
+import core from "dstash-core";
 import { app, BrowserWindow } from "electron";
 
 function createWindow() {
@@ -11,14 +12,13 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 }
 
-app.on("ready", () => {
-  createWindow();
-  app.on("activate", function () {
-    // MacOS - counterpart to requiring explicit quit
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
+Promise.all([app.whenReady(), core.bootstrap()]).then(createWindow);
+
 app.on("window-all-closed", () => {
-  // MacOS - require explicit quit
+  // MacOS - require explicit quit rather than all windows closed
   if (process.platform !== "darwin") app.quit();
+});
+app.on("activate", function () {
+  // MacOS - counterpart to requiring explicit quit
+  if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
