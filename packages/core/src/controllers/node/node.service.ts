@@ -1,18 +1,19 @@
-import { MikroORM, UseRequestContext } from "@mikro-orm/core";
+import { EntityRepository } from "@mikro-orm/core";
+import { InjectRepository } from "@mikro-orm/nestjs";
 import { Injectable } from "@nestjs/common";
 import { Node } from "./node.entity";
 
 @Injectable()
 export class NodeService {
-  constructor(private orm: MikroORM) {}
+  constructor(
+    @InjectRepository(Node) private nodeRep: EntityRepository<Node>
+  ) {}
 
-  @UseRequestContext()
   findAll() {
-    return this.orm.em.getRepository(Node).findAll();
+    return this.nodeRep.findAll();
   }
 
-  @UseRequestContext()
   write(input: Node | Node[]) {
-    return this.orm.em.getRepository(Node).persist(input).flush();
+    return this.nodeRep.persist(input).flush();
   }
 }

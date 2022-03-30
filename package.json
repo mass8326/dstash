@@ -5,8 +5,8 @@
     "name": "mass8326"
   },
   "scripts": {
-    "dev:desktop": "dotenv -e ../../.env -v BUILD_TARGET=DESKTOP -- turbo run dev",
-    "dev:server": "dotenv -e ../../.env -v BUILD_TARGET=SERVER -- turbo run dev",
+    "dev:desktop": "dotenv -e .env -- turbo run dev",
+    "dev:server": "dotenv -e .env -- turbo run dev --scope=dstash-core --scope=dstash-ui --no-deps",
     "build": "turbo run build",
     "lint": "gulp lint --silent",
     "test": "turbo run test"

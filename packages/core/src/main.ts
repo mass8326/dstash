@@ -2,30 +2,19 @@ import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter } from "@nestjs/platform-fastify";
 import { AppModule } from "./app.module";
-import { ElectronIPCTransport } from "nestjs-electron-ipc-transport";
-import { INestApplication, INestMicroservice, Logger } from "@nestjs/common";
-import { Target } from "./config/config.build";
+import { Logger } from "@nestjs/common";
 
 const logger = new Logger("Bootstrap");
 
-export async function bootstrap() {
-  let app: INestApplication | INestMicroservice;
-  if (process.env.BUILD_TARGET === Target.Desktop) {
-    app = await NestFactory.createMicroservice(AppModule, {
-      strategy: new ElectronIPCTransport(),
-    });
-    await app.listen();
-    logger.log("dstash-core listening for ipc");
-  } else if (process.env.BUILD_TARGET === Target.Server) {
-    app = await NestFactory.create(AppModule, new FastifyAdapter());
-    const host = process.env.HOST ?? "0.0.0.0";
-    const port = process.env.PORT ?? 4000;
-    await app.listen(port, host);
-    logger.log(`dstash-core listening at http://${host}:${port}`);
-  } else {
-    logger.error("Invalid BUILD_TARGET");
-    throw new Error("Invalid BUILD_TARGET");
-  }
+type Options = {
+  host?: string;
+  port?: string;
+};
+
+export async function bootstrap({ host, port }: Options) {
+  const app = await NestFactory.create(AppModule, new FastifyAdapter());
+  await app.listen(port ?? 4000, host ?? "127.0.0.1");
+  logger.log(`dstash-core listening at http://${host}:${port}`);
 
   if (module.hot) {
     module.hot.accept();
@@ -34,7 +23,3 @@ export async function bootstrap() {
 
   return app;
 }
-
-if (process.env.BUILD_TARGET === Target.Server) bootstrap();
-
-export default { bootstrap };

@@ -4,7 +4,12 @@ import config from "../mikro-orm.config";
 import { DatabaseService } from "./database.service";
 
 @Module({
-  imports: [MikroOrmModule.forRoot(config)],
+  imports: [
+    MikroOrmModule.forRoot({
+      ...config,
+      autoLoadEntities: true,
+    }),
+  ],
   providers: [DatabaseService],
 })
 export class DatabaseModule {}
