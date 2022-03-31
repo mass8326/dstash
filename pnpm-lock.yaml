@@ -180,9 +180,11 @@ importers:
       better-sqlite3: ^7.5.0
       commitlint: ^16.2.3
       dstash-config: workspace:*
+      dstash-core: workspace:*
       gulp: ^4.0.2
       husky: ^7.0.4
       lodash: ^4.17.21
+      prettier-plugin-svelte: 2.6.0
       svelte: ^3.44.0
       svelte-check: ^2.2.6
       svelte-preprocess: ^4.10.1
@@ -203,9 +205,11 @@ importers:
       better-sqlite3: 7.5.0
       commitlint: 16.2.3
       dstash-config: link:../config
+      dstash-core: link:../core
       gulp: 4.0.2
       husky: 7.0.4
       lodash: 4.17.21
+      prettier-plugin-svelte: 2.6.0_prettier@2.6.0+svelte@3.46.4
       svelte: 3.46.4
       svelte-check: 2.4.6_svelte@3.46.4
       svelte-preprocess: 4.10.4_svelte@3.46.4+typescript@4.6.2
