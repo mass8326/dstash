@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
-import { FastifyAdapter } from "@nestjs/platform-fastify";
+import { ExpressAdapter } from "@nestjs/platform-express";
 import { AppModule } from "./app.module";
 import { Logger } from "@nestjs/common";
 
@@ -12,7 +12,7 @@ type Options = {
 };
 
 export async function bootstrap({ host, port }: Options) {
-  const app = await NestFactory.create(AppModule, new FastifyAdapter());
+  const app = await NestFactory.create(AppModule, new ExpressAdapter());
   await app.listen(port ?? 4000, host ?? "127.0.0.1");
   logger.log(`dstash-core listening at http://${host}:${port}`);
 
