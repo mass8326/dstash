@@ -25,7 +25,16 @@
   {/if}
   <ul>
     {#each nodes as node}
-      <li>{node.hash}</li>
+      <li>
+        <p>{node.hash}</p>
+        <img src={`http://localhost:4000/node/${node.hash}`} alt="" />
+      </li>
     {/each}
   </ul>
 {/await}
+
+<style>
+  img {
+    max-height: 240px;
+  }
+</style>
