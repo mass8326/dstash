@@ -1,3 +1,4 @@
+import type { TrpcMiddleware } from "./trpc/trpc.middleware";
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
@@ -13,6 +14,7 @@ type Options = {
 
 export async function bootstrap({ host, port }: Options) {
   const app = await NestFactory.create(AppModule, new ExpressAdapter());
+  app.enableCors({ origin: true });
   await app.listen(port ?? 4000, host ?? "127.0.0.1");
   logger.log(`dstash-core listening at http://${host}:${port}`);
 
@@ -23,3 +25,5 @@ export async function bootstrap({ host, port }: Options) {
 
   return app;
 }
+
+export type TrpcSchema = ReturnType<TrpcMiddleware["getRouter"]>;
