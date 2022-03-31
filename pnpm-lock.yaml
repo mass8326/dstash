@@ -179,6 +179,7 @@ importers:
       '@playwright/test': ^1.20.0
       '@sveltejs/adapter-auto': next
       '@sveltejs/kit': next
+      '@trpc/client': ^9.20.3
       '@types/lodash': ^4.14.180
       '@types/node': ^17.0.21
       better-sqlite3: ^7.5.0
@@ -204,6 +205,7 @@ importers:
       '@playwright/test': 1.20.0
       '@sveltejs/adapter-auto': 1.0.0-next.33
       '@sveltejs/kit': 1.0.0-next.303_svelte@3.46.4
+      '@trpc/client': 9.20.3
       '@types/lodash': 4.14.180
       '@types/node': 17.0.21
       better-sqlite3: 7.5.0
@@ -826,6 +828,13 @@ packages:
       '@babel/plugin-transform-typescript': 7.16.8_@babel+core@7.16.12
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@babel/runtime/7.17.8:
+    resolution: {integrity: sha512-dQpEpK0O9o6lj6oPu0gRDbbnk+4LeHlNcBpspf6Olzt3GIX4P1lWF1gS+pHLDFlaJvbR6q7jCfQ08zA4QJBnmA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.9
     dev: true
 
   /@babel/template/7.16.7:
@@ -2534,6 +2543,14 @@ packages:
   /@tootallnate/once/1.1.2:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
     engines: {node: '>= 6'}
+    dev: true
+
+  /@trpc/client/9.20.3:
+    resolution: {integrity: sha512-sgIZe3+EBbuxlI0YSv6tnPnEQtRB1YPGuWT8ihAI9sHcF4yLRwiDSnj2GnvR0z2O5wFh2yW1TDmQIJM8NMG0Fg==}
+    peerDependencies:
+      '@trpc/server': 9.20.3
+    dependencies:
+      '@babel/runtime': 7.17.8
     dev: true
 
   /@trpc/server/9.20.3:
@@ -10223,6 +10240,10 @@ packages:
 
   /reflect-metadata/0.1.13:
     resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
+
+  /regenerator-runtime/0.13.9:
+    resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
+    dev: true
 
   /regex-not/1.0.2:
     resolution: {integrity: sha512-J6SDjUgDxQj5NusnOtdFxDwN/+HWykR8GELwctJ7mdqhcyy1xEc4SRFHUXvxTp661YaVKAjfRLZ9cCqS6tn32A==}

@@ -21,6 +21,7 @@
     "@playwright/test": "^1.20.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@trpc/client": "^9.20.3",
     "@types/lodash": "^4.14.180",
     "@types/node": "^17.0.21",
     "better-sqlite3": "^7.5.0",
