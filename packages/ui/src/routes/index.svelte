@@ -5,10 +5,10 @@
   const client = createTRPCClient<TrpcSchema>({
     url: "http://localhost:4000/trpc",
   });
-  let results = client.query("node.all");
+  let results = client.query("entry.all");
   async function consume() {
     await client.mutation("stash.consume");
-    results = client.query("node.all");
+    results = client.query("entry.all");
   }
 </script>
 
@@ -19,15 +19,15 @@
 <button on:click={consume}>Consume</button>
 {#await results}
   <p>Loading...</p>
-{:then nodes}
-  {#if nodes.length === 0}
+{:then entries}
+  {#if entries.length === 0}
     <p>No entries found!</p>
   {/if}
   <ul>
-    {#each nodes as node}
+    {#each entries as entry}
       <li>
-        <p>{node.hash}</p>
-        <img src={`http://localhost:4000/node/${node.hash}`} alt="" />
+        <p>{entry.id} - {entry.hash}</p>
+        <img src={`http://localhost:4000/entry/${entry.id}`} alt="" />
       </li>
     {/each}
   </ul>

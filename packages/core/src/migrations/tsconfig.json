@@ -1,8 +1,0 @@
-{
-  "extends": "../../node_modules/dstash-config/node.tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "../../dist/migrations",
-    "skipLibCheck": true
-  }
-}

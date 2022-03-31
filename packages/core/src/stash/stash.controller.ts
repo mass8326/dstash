@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { Node } from "../node/node.entity";
+import { Entry } from "../entities/entry/entry.entity";
 import { StashService } from "./stash.service";
 import { Get } from "@nestjs/common";
 
@@ -8,7 +8,7 @@ export class StashController {
   constructor(private stashSvc: StashService) {}
 
   @Get()
-  async get(): Promise<Node[]> {
+  async get(): Promise<Entry[]> {
     return this.stashSvc.consume();
   }
 }

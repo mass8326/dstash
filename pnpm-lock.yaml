@@ -99,6 +99,7 @@ importers:
       typescript: 4.6.2
       webpack: ^5.70.0
       webpack-node-externals: ^3.0.0
+      zod: ^3.14.3
     dependencies:
       '@mikro-orm/better-sqlite': 5.1.1_888ae5c367e80b9bb22d940abeb3d6ea
       '@mikro-orm/core': 5.1.1_93c321ebdf40b709b0eea23402947bab
@@ -116,6 +117,7 @@ importers:
       reflect-metadata: 0.1.13
       rxjs: 7.5.5
       typescript: 4.6.2
+      zod: 3.14.3
     devDependencies:
       '@mikro-orm/cli': 5.1.1_93c321ebdf40b709b0eea23402947bab
       '@nestjs/cli': 8.2.4_esbuild@0.14.27
@@ -12625,3 +12627,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod/3.14.3:
+    resolution: {integrity: sha512-OzwRCSXB1+/8F6w6HkYHdbuWysYWnAF4fkRgKDcSFc54CE+Sv0rHXKfeNUReGCrHukm1LNpi6AYeXotznhYJbQ==}
+    dev: false

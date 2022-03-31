@@ -3,6 +3,49 @@
   "tables": [
     {
       "columns": {
+        "namespace": {
+          "name": "namespace",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        }
+      },
+      "name": "tag",
+      "indexes": [
+        {
+          "keyName": "primary",
+          "columnNames": ["namespace", "name"],
+          "composite": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
         "hash": {
           "name": "hash",
           "type": "text",
@@ -31,18 +74,25 @@
           "mappedType": "text"
         }
       },
-      "name": "node",
+      "name": "entry",
       "indexes": [
+        {
+          "columnNames": ["hash"],
+          "composite": false,
+          "keyName": "entry_hash_unique",
+          "primary": false,
+          "unique": true
+        },
         {
           "columnNames": ["path"],
           "composite": false,
-          "keyName": "node_path_unique",
+          "keyName": "entry_path_unique",
           "primary": false,
           "unique": true
         },
         {
           "keyName": "primary",
-          "columnNames": ["hash"],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -50,6 +100,82 @@
       ],
       "checks": [],
       "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "entry_id": {
+          "name": "entry_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "tag_namespace": {
+          "name": "tag_namespace",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "tag_name": {
+          "name": "tag_name",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        }
+      },
+      "name": "entry_tags",
+      "indexes": [
+        {
+          "columnNames": ["entry_id"],
+          "composite": false,
+          "keyName": "entry_tags_entry_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "entry_tags_tag_namespace_tag_name_index",
+          "columnNames": ["tag_namespace", "tag_name"],
+          "composite": true,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "primary",
+          "columnNames": ["entry_id", "tag_namespace", "tag_name"],
+          "composite": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "entry_tags_entry_id_foreign": {
+          "constraintName": "entry_tags_entry_id_foreign",
+          "columnNames": ["entry_id"],
+          "localTableName": "entry_tags",
+          "referencedColumnNames": ["id"],
+          "referencedTableName": "entry",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "entry_tags_tag_namespace_tag_name_foreign": {
+          "constraintName": "entry_tags_tag_namespace_tag_name_foreign",
+          "columnNames": ["tag_namespace", "tag_name"],
+          "localTableName": "entry_tags",
+          "referencedColumnNames": ["namespace", "name"],
+          "referencedTableName": "tag",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      }
     }
   ]
 }

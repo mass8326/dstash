@@ -1,10 +1,10 @@
 import { Module, MiddlewareConsumer } from "@nestjs/common";
-import { NodeModule } from "src/controllers/node/node.module";
-import { StashModule } from "src/controllers/stash/stash.module";
+import { EntryModule } from "src/entities/entry/entry.module";
+import { StashModule } from "src/stash/stash.module";
 import { TrpcMiddleware } from "./trpc.middleware";
 
 @Module({
-  imports: [NodeModule, StashModule],
+  imports: [EntryModule, StashModule],
   providers: [TrpcMiddleware],
 })
 export class TrpcModule {

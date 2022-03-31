@@ -2,19 +2,19 @@ import crypto from "crypto";
 import { join, resolve } from "path";
 import { Injectable } from "@nestjs/common";
 import fs from "fs-extra";
-import { Node } from "../node/node.entity";
-import { NodeService } from "../node/node.service";
+import { Entry } from "../entities/entry/entry.entity";
+import { EntryService } from "../entities/entry/entry.service";
 
 @Injectable()
 export class StashService {
-  constructor(private nodeSvc: NodeService) {}
+  constructor(private entrySvc: EntryService) {}
 
   async consume() {
     const root = resolve(process.env.STASH_DIR ?? "sample");
     const dropoff = join(root, "dropoff");
     const stashed = join(root, "stashed");
     const files = await fs.readdir(dropoff);
-    const success: Node[] = [];
+    const success: Entry[] = [];
     const failure: [string, unknown][] = [];
     await Promise.all(
       files.map(async (name) => {
@@ -35,13 +35,13 @@ export class StashService {
             (ext ? `.${ext}` : "");
           const dest = join(stashed, rename);
           await fs.move(path, dest);
-          success.push(new Node(hash, rename, ext));
+          success.push(new Entry(hash, rename, ext));
         } catch (err: any) {
           failure.push([name, err?.code ?? err]);
         }
       })
     );
-    if (success.length) await this.nodeSvc.write(success);
+    if (success.length) await this.entrySvc.write(success);
     if (failure.length) console.warn("Imports failed:", failure);
     return success;
   }
