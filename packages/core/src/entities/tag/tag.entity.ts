@@ -6,8 +6,9 @@ import {
   PrimaryKeyType,
 } from "@mikro-orm/core";
 import { Entry } from "../entry/entry.entity";
+import { TagRepository } from "./tag.repository";
 
-@Entity()
+@Entity({ customRepository: () => TagRepository })
 export class Tag {
   @PrimaryKey()
   namespace: string;

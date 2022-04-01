@@ -1,16 +1,17 @@
+import { join } from "path";
 import { EntityRepository } from "@mikro-orm/core";
 import { InjectRepository } from "@mikro-orm/nestjs";
 import { Injectable } from "@nestjs/common";
 import { createReadStream } from "fs-extra";
-import { join } from "path";
 import { Tag } from "../tag/tag.entity";
+import { TagRepository } from "../tag/tag.repository";
 import { Entry } from "./entry.entity";
 
 @Injectable()
 export class EntryService {
   constructor(
     @InjectRepository(Entry) private entryRep: EntityRepository<Entry>,
-    @InjectRepository(Tag) private tagRep: EntityRepository<Tag>
+    @InjectRepository(Tag) private tagRep: TagRepository
   ) {}
 
   one(id: number) {
@@ -34,10 +35,11 @@ export class EntryService {
   async tagAdd(id: number, composite: [string, string]) {
     const [entry, tag] = await Promise.all([
       this.entryRep.findOne(id, { populate: ["tags"] }),
-      this.tagRep.findOne(composite),
+      this.tagRep.findOneOrCreate(composite),
     ]);
     if (!entry) return null;
-    entry.tags.add(tag ?? new Tag(composite));
+    entry.tags.add(tag);
+    return entry;
   }
 
   async stream(id: number) {
