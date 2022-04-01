@@ -18,7 +18,7 @@
 </p>
 <button on:click={consume}>Consume</button>
 {#await results}
-  <p>Loading...</p>
+  <p>Loading entries...</p>
 {:then entries}
   {#if entries.length === 0}
     <p>No entries found!</p>
@@ -27,6 +27,19 @@
     {#each entries as entry}
       <li>
         <p>{entry.id} - {entry.hash}</p>
+        <ul>
+          {#await client.query("entry.tags", entry.id)}
+            <li>Loading tags...</li>
+          {:then tags}
+            {#if !tags}
+              <li>No tags found!</li>
+            {:else}
+              {#each tags as { namespace, name }}
+                <li>{namespace ? namespace + ":" : ""}{name}</li>
+              {/each}
+            {/if}
+          {/await}
+        </ul>
         <img src={`http://localhost:4000/entry/${entry.id}`} alt="" />
       </li>
     {/each}

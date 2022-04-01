@@ -1,13 +1,19 @@
 import crypto from "crypto";
 import { join, resolve } from "path";
+import { EntityRepository } from "@mikro-orm/better-sqlite";
+import { InjectRepository } from "@mikro-orm/nestjs";
 import { Injectable } from "@nestjs/common";
 import fs from "fs-extra";
 import { Entry } from "../entities/entry/entry.entity";
-import { EntryService } from "../entities/entry/entry.service";
+import { Tag } from "../entities/tag/tag.entity";
+import { TagRepository } from "../entities/tag/tag.repository";
 
 @Injectable()
 export class StashService {
-  constructor(private entrySvc: EntryService) {}
+  constructor(
+    @InjectRepository(Entry) private entryRep: EntityRepository<Entry>,
+    @InjectRepository(Tag) private tagRep: TagRepository
+  ) {}
 
   async consume() {
     const root = resolve(process.env.STASH_DIR ?? "sample");
@@ -41,7 +47,13 @@ export class StashService {
         }
       })
     );
-    if (success.length) await this.entrySvc.write(success);
+    if (success.length) {
+      // Attach a default tag
+      const tag = await this.tagRep.findOneOrCreate(["meta", "default"]);
+      this.entryRep.persist(success);
+      success.map((entry) => entry.tags.add(tag));
+      await this.entryRep.flush();
+    }
     if (failure.length) console.warn("Imports failed:", failure);
     return success;
   }

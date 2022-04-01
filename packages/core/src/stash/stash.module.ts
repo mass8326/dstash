@@ -1,11 +1,13 @@
+import { MikroOrmModule } from "@mikro-orm/nestjs";
 import { Module } from "@nestjs/common";
-import { EntryModule } from "../entities/entry/entry.module";
+import { Entry } from "../entities/entry/entry.entity";
+import { Tag } from "../entities/tag/tag.entity";
 import { StashController } from "./stash.controller";
 import { StashResolver } from "./stash.resolver";
 import { StashService } from "./stash.service";
 
 @Module({
-  imports: [EntryModule],
+  imports: [MikroOrmModule.forFeature([Entry, Tag])],
   controllers: [StashController],
   providers: [StashService, StashResolver],
   exports: [StashResolver],
