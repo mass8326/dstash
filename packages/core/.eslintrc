@@ -1,1 +1,1 @@
-{ "extends": ["./node_modules/dstash-config/svelte.eslintrc.js"] }
+{ "extends": ["./node_modules/dstash-config/node.eslintrc.js"] }

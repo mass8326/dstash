@@ -1,9 +1,9 @@
 import type { TrpcMiddleware } from "./trpc/trpc.middleware";
 import "reflect-metadata";
+import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
 import { AppModule } from "./app.module";
-import { Logger } from "@nestjs/common";
 
 const logger = new Logger("Bootstrap");
 

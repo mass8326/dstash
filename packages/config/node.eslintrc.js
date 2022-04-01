@@ -1,17 +1,10 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: 2021,
-  },
-  env: { node: true },
-  plugins: ["@typescript-eslint", "import", "unicorn"],
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
+    "./ts.eslintrc.js",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "prettier",
   ],
+  plugins: ["import", "unicorn"],
   rules: {
     "import/order": [
       "error",
@@ -29,5 +22,6 @@ module.exports = {
         ],
       },
     ],
+    "import/no-unresolved": ["off"]
   },
 };

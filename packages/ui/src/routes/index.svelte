@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { TrpcSchema } from "dstash-core";
-  import type { router } from "@trpc/server";
   import { createTRPCClient } from "@trpc/client";
 
   type QueryAwaited<T extends keyof TrpcSchema["_def"]["queries"]> = Awaited<

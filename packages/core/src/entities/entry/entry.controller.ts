@@ -1,7 +1,6 @@
-import { Controller, Param, Res } from "@nestjs/common";
-import { EntryService } from "./entry.service";
-import { Get } from "@nestjs/common";
+import { Controller, Param, Res, Get } from "@nestjs/common";
 import { Response } from "express";
+import { EntryService } from "./entry.service";
 
 @Controller("entry")
 export class EntryController {
