@@ -39,6 +39,7 @@ export class EntryService {
     ]);
     if (!entry) return null;
     entry.tags.add(tag);
+    await this.entryRep.flush();
     return entry;
   }
 

@@ -6,7 +6,7 @@ export class TagRepository extends EntityRepository<Tag> {
     const found = await this.findOne(composite);
     if (found) return found;
     const created = new Tag(composite);
-    this.persist(created);
+    await this.persist(created).flush();
     return created;
   }
 }

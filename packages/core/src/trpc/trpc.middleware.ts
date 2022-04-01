@@ -1,16 +1,18 @@
-import { Injectable, NestMiddleware } from "@nestjs/common";
-import { Request, Response } from "express";
-import { EntryResolver } from "src/entities/entry/entry.resolver";
-import { StashResolver } from "src/stash/stash.resolver";
-import { nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
 import { MikroORM, RequestContext } from "@mikro-orm/core";
+import { Injectable, NestMiddleware } from "@nestjs/common";
 import * as trpc from "@trpc/server";
+import { nodeHTTPRequestHandler } from "@trpc/server/adapters/node-http";
+import { Request, Response } from "express";
+import { EntryResolver } from "../entities/entry/entry.resolver";
+import { TagResolver } from "../entities/tag/tag.resolver";
+import { StashResolver } from "../stash/stash.resolver";
 
 @Injectable()
 export class TrpcMiddleware implements NestMiddleware {
   constructor(
     private orm: MikroORM,
     private entryRslv: EntryResolver,
+    private tagRslv: TagResolver,
     private stashRslv: StashResolver
   ) {}
   async use(req: Request, res: Response) {
@@ -27,6 +29,7 @@ export class TrpcMiddleware implements NestMiddleware {
     return trpc
       .router()
       .merge(this.entryRslv.getRouter())
+      .merge(this.tagRslv.getRouter())
       .merge(this.stashRslv.getRouter());
   }
 }

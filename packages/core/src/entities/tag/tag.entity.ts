@@ -8,6 +8,8 @@ import {
 import { Entry } from "../entry/entry.entity";
 import { TagRepository } from "./tag.repository";
 
+export type TagSerialized = Omit<Tag, "entries" | typeof PrimaryKeyType>;
+
 @Entity({ customRepository: () => TagRepository })
 export class Tag {
   @PrimaryKey()
