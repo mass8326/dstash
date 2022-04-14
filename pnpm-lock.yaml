@@ -189,7 +189,6 @@ importers:
       commitlint: ^16.2.3
       dstash-config: workspace:*
       dstash-core: workspace:*
-      gulp: ^4.0.2
       husky: ^7.0.4
       lodash: ^4.17.21
       modern-normalize: ^1.1.0
@@ -218,7 +217,6 @@ importers:
       commitlint: 16.2.3
       dstash-config: link:../config
       dstash-core: link:../core
-      gulp: 4.0.2
       husky: 7.0.4
       lodash: 4.17.21
       modern-normalize: 1.1.0

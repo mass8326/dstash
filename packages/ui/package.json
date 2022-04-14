@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "gulp dev",
+    "dev": "svelte-kit dev",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -29,7 +29,6 @@
     "commitlint": "^16.2.3",
     "dstash-config": "workspace:*",
     "dstash-core": "workspace:*",
-    "gulp": "^4.0.2",
     "husky": "^7.0.4",
     "lodash": "^4.17.21",
     "modern-normalize": "^1.1.0",
