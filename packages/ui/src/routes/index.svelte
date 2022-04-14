@@ -1,16 +1,8 @@
 <script lang="ts" context="module">
-  import type { TrpcSchema } from "dstash-core";
-  import { createTRPCClient } from "@trpc/client";
+  import { client, type QueryAwaited } from "$lib/trpc";
 </script>
 
 <script lang="ts">
-  type QueryAwaited<T extends keyof TrpcSchema["_def"]["queries"]> = Awaited<
-    ReturnType<TrpcSchema["_def"]["queries"][T]["call"]>
-  >;
-  const client = createTRPCClient<TrpcSchema>({
-    url: "http://localhost:4000/trpc",
-  });
-
   let entries: (QueryAwaited<"entry.all">[0] & {
     tags: QueryAwaited<"entry.tags">;
   })[];
@@ -28,19 +20,6 @@
     await client.mutation("stash.consume");
     await init();
   }
-
-  /*
-  const inputs = {} as Record<number, string>;
-  async function addTag(id: number) {
-    const result = await client.mutation("entry.tag-add", {
-      id,
-      tag: ["", inputs[id]],
-    });
-    if (!result) return alert("Something went wrong!");
-    const index = entries.findIndex((entry) => entry.id === id);
-    entries[index] = { ...result, tags: await client.query("entry.tags", id) };
-  }
-  */
 
   let sizeArr = [100, 150, 200, 300, 450, 600];
   let sizeInd = 2;
@@ -69,29 +48,12 @@
   {/if}
   <div class="list" style={`--icon-size:${sizeArr[sizeInd]}px`}>
     {#each entries as entry}
-      <a href={`item/${entry.hash}`} class="item">
+      <a href={`item/${entry.id}`} class="item">
         <img
           class="bg"
           src={`http://localhost:4000/entry/${entry.id}`}
           alt=""
         />
-        <!--         
-        <p>{entry.id} - {entry.hash}</p>
-        <ul>
-          {#if !entry.tags}
-            <li>No tags found!</li>
-          {:else}
-            {#each entry.tags as { namespace, name }}
-              <li>{namespace ? namespace + ":" : ""}{name}</li>
-            {/each}
-          {/if}
-          <li>
-            <button on:click={() => addTag(entry.id)}>Add</button>
-            <input bind:value={inputs[entry.id]} />
-            {inputs[entry.id]}
-          </li>
-        </ul>
-        -->
         <img
           class="thumbnail"
           src={`http://localhost:4000/entry/${entry.id}`}

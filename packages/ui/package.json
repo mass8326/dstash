@@ -8,7 +8,7 @@
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "prepare": "playwright install && svelte-kit sync",
-    "test": "playwright test",
+    "test": "echo playwright test",
     "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
     "lint": "svelte-check --tsconfig ./tsconfig.json --threshold error && lint-staged"
   },
