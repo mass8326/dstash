@@ -9,19 +9,19 @@
   let tags: QueryAwaited<"entry.tags">;
   async function init() {
     [item, tags] = await Promise.all([
-      client.query("entry.one", id),
-      client.query("entry.tags", id),
+      client().query("entry.one", id),
+      client().query("entry.tags", id),
     ]);
   }
 
   let input: string;
   async function addTag() {
-    const result = await client.mutation("entry.tag-add", {
+    const result = await client().mutation("entry.tag-add", {
       id,
       tag: ["", input],
     });
     if (!result) return alert("Something went wrong!");
-    tags = await client.query("entry.tags", id);
+    tags = await client().query("entry.tags", id);
   }
 </script>
 

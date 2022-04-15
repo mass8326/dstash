@@ -3,4 +3,9 @@
   import List from "$lib/list.svelte";
 </script>
 
-<List page={parseInt($page.params.num)} />
+<script lang="ts">
+  $: int = parseInt($page.params.num);
+  $: parsed = Number.isNaN(int) || int < 1 ? 1 : int;
+</script>
+
+<List page={parsed} />
