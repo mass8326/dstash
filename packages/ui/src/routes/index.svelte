@@ -48,19 +48,21 @@
   {/if}
   <div class="list" style={`--icon-size:${sizeArr[sizeInd]}px`}>
     {#each entries as entry}
-      <a href={`item/${entry.id}`} class="item">
+      <div class="item">
+        <input class="check" type="checkbox" />
         <img
           class="bg"
           src={`http://localhost:4000/entry/${entry.id}`}
           alt=""
         />
-        <img
-          class="thumbnail"
-          src={`http://localhost:4000/entry/${entry.id}`}
-          alt=""
-        />
-        <span class="label">{entry.id}</span>
-      </a>
+        <a class="link" href={`item/${entry.id}`}>
+          <img
+            class="thumbnail"
+            src={`http://localhost:4000/entry/${entry.id}`}
+            alt=""
+          />
+        </a>
+      </div>
     {/each}
   </div>
 {/await}
@@ -93,27 +95,29 @@
       opacity: 0.5;
       z-index: -1;
     }
-    &:hover .label {
+    &:hover .check,
+    .check:checked {
       visibility: visible;
     }
-    .label {
+    .check {
       visibility: hidden;
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
       margin: 0.25em;
-      border-radius: 0.25em;
-      padding: 0.25em;
-      background-color: #fff;
     }
+    .link {
+      height: 100%;
+      width: 100%;
 
-    // Flex children
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .thumbnail {
-      max-height: 100%;
-      max-width: 100%;
+      // Flex children
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .thumbnail {
+        max-height: 100%;
+        max-width: 100%;
+      }
     }
   }
 </style>
