@@ -5,11 +5,11 @@
     "name": "mass8326"
   },
   "scripts": {
-    "dev:desktop": "dotenv -e .env -- turbo run dev",
-    "dev:server": "dotenv -e .env -- turbo run dev --scope=dstash-core --scope=dstash-ui --no-deps",
-    "build": "turbo run build",
+    "dev": "dotenv -e .env -- turbo run dev --filter=dstash-ui...",
+    "build": "dotenv -e .env -- turbo run build",
+    "serve": "dotenv -e .env -- turbo run serve",
     "lint": "gulp lint --silent",
-    "test": "turbo run test"
+    "test": "pnpm run lint && turbo run test"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^16.2.1",
@@ -24,7 +24,7 @@
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.0",
     "svelte": "^3.46.4",
-    "turbo": "^1.1.10"
+    "turbo": "^1.2.4"
   },
   "repository": {
     "type": "git",

@@ -12,10 +12,11 @@ type Options = {
   port?: string;
 };
 
-export async function bootstrap({ host, port }: Options) {
+export async function bootstrap(options: Options = {}) {
+  const { host = "127.0.0.1", port = 4000 } = options;
   const app = await NestFactory.create(AppModule, new ExpressAdapter());
   app.enableCors({ origin: true });
-  await app.listen(port ?? 4000, host ?? "127.0.0.1");
+  await app.listen(port, host);
   logger.log(`dstash-core listening at http://${host}:${port}`);
 
   if (module.hot) {

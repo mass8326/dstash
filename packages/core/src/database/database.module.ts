@@ -7,6 +7,9 @@ import { DatabaseService } from "./database.service";
   imports: [
     MikroOrmModule.forRoot({
       ...config,
+      // Entities for production/development
+      entities: undefined,
+      entitiesTs: undefined,
       autoLoadEntities: true,
     }),
   ],

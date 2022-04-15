@@ -6,12 +6,16 @@
     "lint": {
       "outputs": []
     },
-    "build": {
-      "dependsOn": ["lint", "^build"],
+    "test": {
+      "dependsOn": ["lint", "build"],
       "outputs": []
     },
-    "test": {
-      "dependsOn": ["lint"],
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "serve": {
+      "dependsOn": ["build"],
       "outputs": []
     }
   }

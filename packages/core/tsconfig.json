@@ -1,10 +1,11 @@
 {
+  "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "./node_modules/dstash-config/node.tsconfig.json",
   "compilerOptions": {
     "types": ["webpack-env"],
     "baseUrl": ".",
-    "outDir": "./dist",
-    "declaration": true,
+    "rootDir": "src",
+    "outDir": "dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true

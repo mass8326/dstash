@@ -1,4 +1,4 @@
-import { bootstrap } from "./src/main";
+import { bootstrap } from "./main";
 
 bootstrap({
   host: process.env.HOST,

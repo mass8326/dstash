@@ -2,15 +2,15 @@ import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import typescript from "@rollup/plugin-typescript";
 
+// Rollup takes care of all files except for migrations
+// Transpile and emit migrations with tsc afterward
+
 export default [
   {
-    input: "src/main.ts",
+    input: "src/index.ts",
     output: {
       dir: "dist",
       format: "cjs",
-      exports: "named",
-      preserveModules: true,
-      preserveModulesRoot: "src",
     },
     plugins: [
       commonjs(),
@@ -18,7 +18,6 @@ export default [
       replace({
         preventAssignment: true,
         values: {
-          "process.env.BUILD_TARGET": `"${process.env.BUILD_TARGET}"`,
           "module.hot": "(undefined)", // Webpack development server
         },
       }),

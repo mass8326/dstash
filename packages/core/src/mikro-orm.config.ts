@@ -8,9 +8,9 @@ const dbName = process.env.STASH_DIR
   ? resolve(process.env.STASH_DIR, "data.db")
   : "dev.db";
 
-// Webpack dev server workaround to import all migrations from folder
 const migrations: MigrationsOptions = module.hot
-  ? (() => {
+  ? // Webpack development server config
+    (() => {
       const context = require.context("./migrations", false, /\.ts$/);
       const migrationsList = context.keys().map((key) => {
         const constructor = Object.values(
@@ -23,19 +23,16 @@ const migrations: MigrationsOptions = module.hot
       });
       return { migrationsList };
     })()
-  : {
-      path: resolve(__dirname, "../dist/migrations"),
-      pathTs: resolve(__dirname, "../src/migrations"),
-    };
+  : // Production config
+    { path: resolve(__dirname, "./migrations") };
 
 const config: Options<BetterSqliteDriver> = {
   // Database
   dbName,
   type: "better-sqlite",
   migrations,
-  // Entities
-  entities: [resolve(__dirname, "../dist/**/*.entity.js")],
-  entitiesTs: [resolve(__dirname, "../src/**/*.entity.ts")],
+  // Entities for CLI
+  entities: [resolve(__dirname, "./**/*.entity.ts")],
   // Logging
   highlighter: new SqlHighlighter(),
   debug: true,

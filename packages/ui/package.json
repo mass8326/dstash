@@ -4,13 +4,13 @@
   "type": "module",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
-    "prepare": "playwright install && svelte-kit sync",
-    "test": "echo playwright test",
     "format": "prettier --ignore-path ../../.gitignore --loglevel warn --write .",
-    "lint": "svelte-check --tsconfig ./tsconfig.json --threshold error && lint-staged"
+    "lint": "lint-staged",
+    "test": "echo playwright test",
+    "build": "svelte-kit build",
+    "serve": "svelte-kit preview",
+    "package": "svelte-kit package",
+    "prepare": "playwright install && svelte-kit sync"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^16.2.1",
