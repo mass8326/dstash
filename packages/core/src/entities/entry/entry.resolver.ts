@@ -15,6 +15,11 @@ export class EntryResolver {
       .query("entry.all", {
         resolve: () => this.entrySvc.all() as Promise<EntrySerialized[]>,
       })
+      .query("entry.page", {
+        input: z.object({ limit: z.number(), offset: z.number() }),
+        resolve: ({ input }): Promise<[EntrySerialized[], number]> =>
+          this.entrySvc.page(input.limit, input.offset),
+      })
       .query("entry.one", {
         input: z.number(),
         resolve: ({ input }) =>

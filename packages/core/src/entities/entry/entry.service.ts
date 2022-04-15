@@ -22,6 +22,10 @@ export class EntryService {
     return this.entryRep.findAll();
   }
 
+  page(limit: number, offset: number) {
+    return this.entryRep.findAndCount({}, { limit, offset });
+  }
+
   write(input: Entry | Entry[]) {
     return this.entryRep.persist(input).flush();
   }
