@@ -1,1 +1,0 @@
-{ "extends": ["./node_modules/dstash-config/node.eslintrc.js"] }
