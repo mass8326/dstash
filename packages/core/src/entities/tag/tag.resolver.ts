@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import * as trpc from "@trpc/server";
 import { z } from "zod";
 import { EntrySerialized } from "../entry/entry.entity";
-import { TagSerialized } from "./tag.entity";
 import { TagService } from "./tag.service";
 
 @Injectable()
@@ -13,7 +12,7 @@ export class TagResolver {
     return trpc
       .router()
       .query("tag.all", {
-        resolve: () => this.tagSvc.all() as Promise<TagSerialized[]>,
+        resolve: () => this.tagSvc.all(),
       })
       .query("tag.entries", {
         input: z.tuple([z.string(), z.string()]),

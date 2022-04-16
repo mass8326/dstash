@@ -11,8 +11,15 @@ export class TagService {
     return this.tagRep.findOne(composite);
   }
 
-  all() {
-    return this.tagRep.findAll();
+  async all() {
+    const tags = await this.tagRep.findAll({});
+    const mapped = await Promise.all(
+      tags.map(async (tag) => ({
+        ...tag,
+        entriesCount: await tag.entries.loadCount(),
+      }))
+    );
+    return mapped;
   }
 
   write(input: Tag | Tag[]) {
