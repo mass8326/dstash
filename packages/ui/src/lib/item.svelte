@@ -12,13 +12,6 @@
 </div>
 
 <style lang="scss">
-  .list {
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(var(--icon-size, 240px), 1fr)
-    );
-  }
   .item {
     margin: 0.5em;
     border: 1px solid #ddd;
