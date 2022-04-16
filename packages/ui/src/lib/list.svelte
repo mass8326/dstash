@@ -4,15 +4,15 @@
   import type { Load } from "@sveltejs/kit";
   import { client, type QueryAwaited } from "$lib/trpc";
 
-  export function loadFactory(page: number): Load {
+  export function loadFactory(page = 1, limit = 25): Load {
     return async function load({ fetch }) {
       const response = await client({ fetch }).query("entry.page", {
-        limit: 20,
-        offset: 20 * (page - 1),
+        limit,
+        offset: limit * (page - 1),
       });
       const entries = response[0];
       const count = response[1];
-      return { props: { entries, count, page } };
+      return { props: { entries, count, page, limit } };
     };
   }
 </script>
@@ -29,8 +29,8 @@
   let size: number;
 </script>
 
-<div class="container-fluid min-sm">
-  <Pane bind:size {pages} {page} />
+<div class="container-fluid">
+  <Pane bind:size {pages} {page} {limit} />
   <div class="row">
     {#if entries.length === 0}
       <p>No entries found!</p>
@@ -49,7 +49,7 @@
     {/if}
   </div>
   {#if entries.length !== 0 && size}
-    <Pane bind:size {pages} {page} />
+    <Pane bind:size {pages} {page} {limit} />
   {/if}
 </div>
 

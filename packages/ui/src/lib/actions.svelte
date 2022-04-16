@@ -1,34 +1,32 @@
 <script lang="ts" context="module">
-  import { client } from "$lib/trpc";
   import Size from "$lib/size.svelte";
-  import { breakpoint } from "./breakpoint";
 </script>
 
 <script lang="ts">
   export let cls = "";
+  export let page: number;
   export let size: number;
-  async function consume() {
-    await client().mutation("stash.consume");
-    location.reload();
+  export let limit: number;
+
+  const limits = [25, 50, 100];
+  function link(page: number, update: number) {
+    const offset = (page - 1) * limit + 1;
+    const target = Math.ceil(offset / update) || 1;
+    return "/page/" + target + "?lim=" + update;
   }
 </script>
 
 <div class={"d-flex align-items-center " + cls}>
-  <a class="mx-2 text-nowrap" href="/tag">
-    <button class="btn btn-sm btn-primary">
-      {#if $breakpoint.sm}
-        View All Tags
-      {:else}
-        All Tags
-      {/if}
-    </button>
-  </a>
-  <button class="mx-2 text-nowrap btn btn-sm btn-primary" on:click={consume}>
-    {#if $breakpoint.sm}
-      Consume Dropoff
-    {:else}
-      Consume
-    {/if}
-  </button>
+  <div class={"btn-group " + cls}>
+    {#each limits as num}
+      <a
+        class="btn btn-sm btn-primary flex-grow-0"
+        class:active={limit === num}
+        href={limit === num ? "#" : link(page, num)}
+      >
+        {num}
+      </a>
+    {/each}
+  </div>
   <Size cls="mx-2 text-nowrap" bind:size />
 </div>

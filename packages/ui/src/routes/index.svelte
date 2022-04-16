@@ -3,13 +3,14 @@
   import type { QueryAwaited } from "$lib/trpc";
   import type { Load } from "@sveltejs/kit";
 
-  export const load: Load = loadFactory(1);
+  export const load: Load = loadFactory();
 </script>
 
 <script lang="ts">
   export let entries: QueryAwaited<"entry.page">[0];
   export let count: number;
   export let page: number;
+  export let limit: number;
 </script>
 
-<List {entries} {count} limit={20} {page} />
+<List {entries} {count} {limit} {page} />
