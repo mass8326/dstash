@@ -29,8 +29,8 @@
   let size: number;
 </script>
 
-<Pane bind:size {pages} {page} />
-<div class="container-fluid">
+<div class="container-fluid min-sm">
+  <Pane bind:size {pages} {page} />
   <div class="row">
     {#if entries.length === 0}
       <p>No entries found!</p>
@@ -48,10 +48,10 @@
       </div>
     {/if}
   </div>
+  {#if entries.length !== 0 && size}
+    <Pane bind:size {pages} {page} />
+  {/if}
 </div>
-{#if entries.length !== 0 && size}
-  <Pane bind:size {pages} {page} />
-{/if}
 
 <style lang="scss">
   .list {

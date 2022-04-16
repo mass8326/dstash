@@ -1,4 +1,9 @@
+<script lang="ts" context="module">
+  import { breakpoint } from "./breakpoint";
+</script>
+
 <script lang="ts">
+  export let cls = "";
   export let size = 200;
 
   let sizeArr = [100, 150, 200, 300, 450, 600];
@@ -13,11 +18,19 @@
   }
 </script>
 
-<div class="btn-group">
+<div class={"btn-group " + cls}>
   <button class="btn btn-sm btn-primary" on:click={smaller}>
-    Icons Smaller
+    {#if $breakpoint.md}
+      Icons Smaller
+    {:else}
+      Icons -
+    {/if}
   </button>
   <button class="btn btn-sm btn-primary" on:click={bigger}>
-    Icons Bigger
+    {#if $breakpoint.md}
+      Icons Bigger
+    {:else}
+      Icons +
+    {/if}
   </button>
 </div>

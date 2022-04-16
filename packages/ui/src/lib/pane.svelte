@@ -1,30 +1,25 @@
 <script lang="ts" context="module">
-  import { client } from "$lib/trpc";
   import Pagination from "$lib/pagination.svelte";
-  import Size from "$lib/size.svelte";
+  import Actions from "$lib/actions.svelte";
+  import { breakpoint } from "./breakpoint";
 </script>
 
 <script lang="ts">
-  // Props
   export let pages: number;
   export let page: number;
-  // Exports
   export let size: number;
-
-  async function consume() {
-    await client().mutation("stash.consume");
-    location.reload();
-  }
 </script>
 
-<div class="row">
-  <div class="col">
-    <Pagination {pages} {page} />
+{#if $breakpoint.md}
+  <div class="row">
+    <Pagination cls="col px-0 mx-2" {pages} {page} />
+    <Actions cls="col px-0 justify-content-end" bind:size />
   </div>
-  <div class="col d-flex align-items-center justify-content-end">
-    <button class="btn btn-sm btn-primary mx-2" on:click={consume}>
-      Consume Dropoff Folder
-    </button>
-    <Size bind:size />
+{:else}
+  <div class="row py-1">
+    <Pagination cls="justify-content-center" {pages} {page} />
   </div>
-</div>
+  <div class="row py-1">
+    <Actions cls="justify-content-center" bind:size />
+  </div>
+{/if}
