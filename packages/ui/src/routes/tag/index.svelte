@@ -2,7 +2,7 @@
   import { client, type QueryAwaited } from "$lib/trpc";
   import type { Load } from "@sveltejs/kit";
   import Tag from "$lib/component/tag.svelte";
-  import { sortBy } from "lodash";
+  import { sortBy } from "lodash-es";
 
   export const load: Load = async ({ fetch }) => {
     const tags = await client({ fetch }).query("tag.all");
