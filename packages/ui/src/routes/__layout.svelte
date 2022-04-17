@@ -17,7 +17,7 @@
     Consume
   </span>
 </nav>
-<div class="container-fluid p-0 pt-5">
+<div class="container-fluid pt-5">
   <slot />
 </div>
 

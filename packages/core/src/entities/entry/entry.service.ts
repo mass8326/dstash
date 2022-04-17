@@ -34,7 +34,13 @@ export class EntryService {
   async tags(id: number) {
     const entry = await this.entryRep.findOne(id);
     if (!entry) return null;
-    return entry.tags.loadItems();
+    const tags = await entry.tags.loadItems();
+    return Promise.all(
+      tags.map(async (tag) => ({
+        ...tag,
+        count: await tag.entries.loadCount(),
+      }))
+    );
   }
 
   async tagAdd(id: number, composite: [string, string]) {

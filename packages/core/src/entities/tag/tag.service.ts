@@ -7,8 +7,13 @@ import { Tag } from "./tag.entity";
 export class TagService {
   constructor(@InjectRepository(Tag) private tagRep: EntityRepository<Tag>) {}
 
-  one(composite: [string, string]) {
-    return this.tagRep.findOne(composite);
+  async one(composite: [string, string]) {
+    const tag = await this.tagRep.findOne(composite);
+    if (!tag) return null;
+    return {
+      ...tag,
+      count: await tag.entries.loadCount(),
+    };
   }
 
   async all() {
@@ -16,7 +21,7 @@ export class TagService {
     const mapped = await Promise.all(
       tags.map(async (tag) => ({
         ...tag,
-        entriesCount: await tag.entries.loadCount(),
+        count: await tag.entries.loadCount(),
       }))
     );
     return mapped;

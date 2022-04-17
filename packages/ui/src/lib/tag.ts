@@ -1,7 +1,24 @@
+import { orderBy, type ListIteratee, type Many } from "lodash";
+
 export type TagParse = {
   namespace?: string;
   name: string;
 };
+
+export function orderTags<T extends TagParse>(
+  input: T[],
+  first: "namespaced" | "tagonly",
+  iteratees?: Many<ListIteratee<T>>,
+  orders?: Many<boolean | "asc" | "desc">
+): T[] {
+  const both = [[], []] as T[][];
+  const [namespaced, tagonly] = both;
+  for (const tag of input) (tag.namespace ? namespaced : tagonly).push(tag);
+  both.map((tags) => orderBy(tags, iteratees, orders));
+  return first === "tagonly"
+    ? [...tagonly, ...namespaced]
+    : [...namespaced, ...tagonly];
+}
 
 // Display
 export function displayify(name: string, namespace?: string): string {

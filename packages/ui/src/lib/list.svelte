@@ -29,29 +29,27 @@
   let size: number;
 </script>
 
-<div class="container-fluid">
-  <Pane bind:size {pages} {page} {limit} />
-  <div class="row">
-    {#if entries.length === 0}
-      <p>No entries found!</p>
-    {/if}
-    {#if size}
-      <div class="list" style={`--icon-size:${size}px`}>
-        {#each entries as entry}
-          {#key entry.id}
-            <Item
-              href={`/item/${entry.id}`}
-              src={`http://localhost:4000/entry/${entry.id}`}
-            />
-          {/key}
-        {/each}
-      </div>
-    {/if}
-  </div>
-  {#if entries.length !== 0 && size}
-    <Pane bind:size {pages} {page} {limit} />
+<Pane bind:size {pages} {page} {limit} />
+<div class="row">
+  {#if entries.length === 0}
+    <p>No entries found!</p>
+  {/if}
+  {#if size}
+    <div class="list" style={`--icon-size:${size}px`}>
+      {#each entries as entry}
+        {#key entry.id}
+          <Item
+            href={`/item/${entry.id}`}
+            src={`http://localhost:4000/entry/${entry.id}`}
+          />
+        {/key}
+      {/each}
+    </div>
   {/if}
 </div>
+{#if entries.length !== 0 && size}
+  <Pane bind:size {pages} {page} {limit} />
+{/if}
 
 <style lang="scss">
   .list {

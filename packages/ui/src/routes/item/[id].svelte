@@ -1,59 +1,57 @@
 <script lang="ts" context="module">
-  import { page } from "$app/stores";
   import { client, type QueryAwaited } from "$lib/trpc";
+  import type { Load } from "@sveltejs/kit";
+  import Tag from "$lib/component/tag.svelte";
+  import { orderTags } from "$lib/tag";
+
+  class RejectedNullError extends Error {}
+  function rejectNull<T>(data: T | null) {
+    return data === null ? Promise.reject(new RejectedNullError()) : data;
+  }
+
+  export const load: Load = async ({ params, fetch }) => {
+    const id = parseInt(params.id);
+    if (Number.isNaN(id))
+      return { status: 400, error: "Item ID must be an integer" };
+    try {
+      const [item, tags] = await Promise.all([
+        client({ fetch }).query("entry.one", id).then(rejectNull),
+        client({ fetch }).query("entry.tags", id).then(rejectNull),
+      ]);
+      return { props: { item, tags } };
+    } catch (e) {
+      if (e instanceof RejectedNullError)
+        return { status: 404, error: "Item ID was not found" };
+      throw e;
+    }
+  };
 </script>
 
 <script lang="ts">
-  const id = parseInt($page.params.id);
-  let item: QueryAwaited<"entry.one">;
-  let tags: QueryAwaited<"entry.tags">;
-  async function init() {
-    [item, tags] = await Promise.all([
-      client().query("entry.one", id),
-      client().query("entry.tags", id),
-    ]);
-  }
-
-  let input: string;
-  async function addTag() {
-    const result = await client().mutation("entry.tag-add", {
-      id,
-      tag: ["", input],
-    });
-    if (!result) return alert("Something went wrong!");
-    tags = await client().query("entry.tags", id);
-  }
+  export let item: NonNullable<QueryAwaited<"entry.one">>;
+  export let tags: NonNullable<QueryAwaited<"entry.tags">>;
 </script>
 
-<a href="/">[Back]</a>
-{#await init()}
-  <p>Loading entry...</p>
-{:then}
-  <p>ID: {item.id}</p>
-  <p>Hash: {item.hash}</p>
-  {#if tags.length === 0}
-    <p>Tags: No tags found!</p>
-  {:else}
-    <p>
-      Tags:
-      {tags
-        .map(
-          ({ namespace, name }) =>
-            `"${namespace ? namespace + ":" : ""}${name}"`
-        )
-        .sort()
-        .join(", ")}
-    </p>
-  {/if}
-  <p>
-    <input bind:value={input} />
-    <button on:click={addTag}>Add Tag</button>
-  </p>
-{/await}
-<img src={`http://localhost:4000/entry/${id}`} alt="" />
+<div class="row">
+  <div class="col text-center">
+    <p>#{item.id} ({item.hash.slice(0, 7)})</p>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col text-center">
+    <img src={`http://localhost:4000/entry/${item.id}`} alt="" />
+  </div>
+</div>
+<div class="row">
+  <div class="col text-center">
+    {#each orderTags( tags, "namespaced", ["namespace", "name"] ) as { name, namespace, count }}
+      <Tag {name} {namespace} {count} />
+    {/each}
+  </div>
+</div>
 
 <style>
   img {
-    max-width: 100%;
+    max-height: 80vh;
   }
 </style>
