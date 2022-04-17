@@ -31,8 +31,12 @@ export class TagService {
     return this.tagRep.persist(input).flush();
   }
 
-  async entries(composite: [string, string]) {
-    const one = await this.tagRep.findOne(composite);
-    return one?.entries.loadItems() ?? null;
+  async entries(composite: [string, string], limit?: number, offset?: number) {
+    const tag = await this.tagRep.findOne(composite);
+    if (!tag) return null;
+    return Promise.all([
+      tag.entries.matching({ limit, offset }),
+      tag.entries.loadCount(),
+    ]);
   }
 }

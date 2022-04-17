@@ -3,11 +3,7 @@
   import type { Load } from "@sveltejs/kit";
   import Tag from "$lib/component/tag.svelte";
   import { orderTags } from "$lib/tag";
-
-  class RejectedNullError extends Error {}
-  function rejectNull<T>(data: T | null) {
-    return data === null ? Promise.reject(new RejectedNullError()) : data;
-  }
+  import { RejectedNullError, rejectNull } from "$lib/util";
 
   export const load: Load = async ({ params, fetch }) => {
     const id = parseInt(params.id);
@@ -20,9 +16,8 @@
       ]);
       return { props: { item, tags } };
     } catch (e) {
-      if (e instanceof RejectedNullError)
-        return { status: 404, error: "Item ID was not found" };
-      throw e;
+      if (!(e instanceof RejectedNullError)) throw e;
+      return { status: 404, error: "Item ID was not found" };
     }
   };
 </script>

@@ -1,21 +1,8 @@
 <script lang="ts" context="module">
   import Pane from "$lib/pane.svelte";
   import Item from "$lib/item.svelte";
-  import type { Load } from "@sveltejs/kit";
-  import { client, type QueryAwaited } from "$lib/trpc";
+  import type { QueryAwaited } from "$lib/trpc";
   import { breakpoint } from "./breakpoint";
-
-  export function loadFactory(page = 1, limit = 25): Load {
-    return async function load({ fetch }) {
-      const response = await client({ fetch }).query("entry.page", {
-        limit,
-        offset: limit * (page - 1),
-      });
-      const entries = response[0];
-      const count = response[1];
-      return { props: { entries, count, page, limit } };
-    };
-  }
 </script>
 
 <script lang="ts">
@@ -24,13 +11,14 @@
   export let limit: number;
   export let count: number;
   export let page = 1;
+  export let base: string;
   $: pages = Math.ceil(count / limit);
 
   // Binds
   let size: number;
 </script>
 
-<Pane bind:size {pages} {page} {limit} />
+<Pane bind:size {pages} {page} {limit} {base} />
 <div class="row">
   {#if entries.length === 0}
     <p>No entries found!</p>
@@ -54,7 +42,7 @@
   {/if}
 </div>
 {#if entries.length !== 0 && size}
-  <Pane bind:size {pages} {page} {limit} />
+  <Pane bind:size {pages} {page} {limit} {base} />
 {/if}
 
 <style lang="scss">

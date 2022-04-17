@@ -10,12 +10,21 @@ export class TagResolver {
   getRouter() {
     return trpc
       .router()
+      .query("tag.one", {
+        input: z.tuple([z.string(), z.string()]),
+        resolve: ({ input }) => this.tagSvc.one(input),
+      })
       .query("tag.all", {
         resolve: () => this.tagSvc.all(),
       })
       .query("tag.entries", {
-        input: z.tuple([z.string(), z.string()]),
-        resolve: ({ input }) => this.tagSvc.entries(input),
+        input: z.object({
+          tag: z.tuple([z.string(), z.string()]),
+          limit: z.number().int().optional(),
+          offset: z.number().int().optional(),
+        }),
+        resolve: ({ input }) =>
+          this.tagSvc.entries(input.tag, input.limit, input.offset),
       });
   }
 }
