@@ -49,9 +49,13 @@ export class EntryService {
       this.tagRep.findOneOrCreate(composite),
     ]);
     if (!entry) return null;
+    if (entry.tags.contains(tag)) return undefined;
     entry.tags.add(tag);
-    await this.entryRep.flush();
-    return entry;
+    const [count] = await Promise.all([
+      tag.entries.loadCount(),
+      this.entryRep.flush(),
+    ]);
+    return { ...tag, count };
   }
 
   async stream(id: number) {

@@ -4,13 +4,14 @@ import { orderBy } from "lodash-es";
 export type TagParse = {
   namespace?: string;
   name: string;
+  count?: number;
 };
 
 export function orderTags<T extends TagParse>(
   input: T[],
-  first: "namespaced" | "tagonly",
-  iteratees?: Many<ListIteratee<T>>,
-  orders?: Many<boolean | "asc" | "desc">
+  first: "namespaced" | "tagonly" = "namespaced",
+  iteratees: Many<ListIteratee<T>> = ["namespace", "name"],
+  orders: Many<boolean | "asc" | "desc"> = ["asc", "asc"]
 ): T[] {
   const both = [[], []] as T[][];
   const [namespaced, tagonly] = both;
