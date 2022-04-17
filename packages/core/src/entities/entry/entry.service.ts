@@ -15,7 +15,8 @@ export class EntryService {
   ) {}
 
   one(id: number) {
-    return this.entryRep.findOne(id);
+    // Destructure id to prevent typecasting 0 to false
+    return this.entryRep.findOne({ id });
   }
 
   all() {

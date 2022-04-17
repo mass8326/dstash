@@ -8,8 +8,6 @@ import {
 } from "@mikro-orm/core";
 import { Tag } from "../tag/tag.entity";
 
-export type EntrySerialized = Omit<Entry, "tags">;
-
 @Entity()
 export class Entry {
   @PrimaryKey()

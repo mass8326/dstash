@@ -2,7 +2,7 @@
   "name": "dstash-core",
   "version": "0.0.1",
   "main": "dist/app.js",
-  "types": "dist/app.d.ts",
+  "types": "src/main.ts",
   "scripts": {
     "dev": "nest build --watch",
     "migrate": "mikro-orm migration:create --path src/migrations",

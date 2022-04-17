@@ -1,8 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import * as trpc from "@trpc/server";
 import { z } from "zod";
-import { TagSerialized } from "../tag/tag.entity";
-import { EntrySerialized } from "./entry.entity";
 import { EntryService } from "./entry.service";
 
 @Injectable()
@@ -13,22 +11,19 @@ export class EntryResolver {
     return trpc
       .router()
       .query("entry.all", {
-        resolve: () => this.entrySvc.all() as Promise<EntrySerialized[]>,
+        resolve: () => this.entrySvc.all(),
       })
       .query("entry.page", {
         input: z.object({ limit: z.number(), offset: z.number() }),
-        resolve: ({ input }): Promise<[EntrySerialized[], number]> =>
-          this.entrySvc.page(input.limit, input.offset),
+        resolve: ({ input }) => this.entrySvc.page(input.limit, input.offset),
       })
       .query("entry.one", {
         input: z.number(),
-        resolve: ({ input }) =>
-          this.entrySvc.one(input) as Promise<EntrySerialized>,
+        resolve: ({ input }) => this.entrySvc.one(input),
       })
       .query("entry.tags", {
         input: z.number(),
-        resolve: ({ input }) =>
-          this.entrySvc.tags(input) as Promise<TagSerialized[]>,
+        resolve: ({ input }) => this.entrySvc.tags(input),
       })
       .mutation("entry.tag-add", {
         input: z.object({
