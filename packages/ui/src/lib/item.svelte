@@ -1,9 +1,10 @@
 <script lang="ts">
+  export let cls = "";
   export let src: string;
   export let href: string;
 </script>
 
-<div class="item">
+<div class={"item " + cls}>
   <input class="check" type="checkbox" />
   <img class="bg" {src} alt="" />
   <a class="link" {href}>
@@ -12,9 +13,10 @@
 </div>
 
 <style lang="scss">
-  .item {
-    margin: 0.5em;
+  .item-border {
     border: 1px solid #ddd;
+  }
+  .item {
     aspect-ratio: 1/1;
 
     // Background

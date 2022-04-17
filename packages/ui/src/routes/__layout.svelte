@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
   import "bootstrap/dist/css/bootstrap.min.css";
   import { client } from "$lib/trpc";
+  import { breakpoint } from "$lib/breakpoint";
 </script>
 
 <script lang="ts">
@@ -10,19 +11,17 @@
   }
 </script>
 
-<nav class="nav fixed-top bg-light">
+<nav class="nav sticky-top bg-light">
   <a class="nav-link" href="/">Home</a>
   <a class="nav-link" href="/tag">Tags</a>
   <span class="nav-link justify" role="button" on:click={consume}>
     Consume
   </span>
 </nav>
-<div class="container-fluid pt-5">
+<!-- 
+  Use margin for y so they will collapse
+  Use padding for x so gutters aren't messed up
+ -->
+<main class="container-fluid my-3" class:px-4={$breakpoint.sm}>
   <slot />
-</div>
-
-<style>
-  :global(body) {
-    margin: 0.5em !important;
-  }
-</style>
+</main>

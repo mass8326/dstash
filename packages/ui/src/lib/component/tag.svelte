@@ -9,7 +9,7 @@
 </script>
 
 <a
-  class="btn btn-sm rounded-pill bg-primary text-light m-1"
+  class="btn btn-sm rounded-pill bg-primary text-light m-1 text-nowrap"
   href={"/tag/" + slugify(name, namespace)}
 >
   {displayify(name, namespace)}

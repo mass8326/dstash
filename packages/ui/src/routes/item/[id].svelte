@@ -32,17 +32,17 @@
   export let tags: NonNullable<QueryAwaited<"entry.tags">>;
 </script>
 
-<div class="row">
+<div class="row my-3">
   <div class="col text-center">
-    <p>#{item.id} ({item.hash.slice(0, 7)})</p>
+    #{item.id} ({item.hash.slice(0, 7)})
   </div>
 </div>
-<div class="row mb-3">
+<div class="row my-3">
   <div class="col text-center">
     <img src={`http://localhost:4000/entry/${item.id}`} alt="" />
   </div>
 </div>
-<div class="row">
+<div class="row my-3">
   <div class="col text-center">
     {#each orderTags( tags, "namespaced", ["namespace", "name"] ) as { name, namespace, count }}
       <Tag {name} {namespace} {count} />
@@ -52,6 +52,8 @@
 
 <style>
   img {
+    min-width: 200px;
+    max-width: 100%;
     max-height: 80vh;
   }
 </style>

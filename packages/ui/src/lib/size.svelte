@@ -5,16 +5,17 @@
 <script lang="ts">
   export let cls = "";
   export let size = 200;
+  $: size = sizeArr[sizeInd];
 
-  let sizeArr = [100, 150, 200, 300, 450, 600];
+  $: sizeArr = [100, 150, 200, 300, 450, 600].map(
+    (sz) => sz / ($breakpoint.sm ? 1 : 1.25)
+  );
   let sizeInd = 2;
   function bigger() {
     if (sizeInd < sizeArr.length - 1) sizeInd++;
-    size = sizeArr[sizeInd];
   }
   function smaller() {
     if (sizeInd > 0) sizeInd--;
-    size = sizeArr[sizeInd];
   }
 </script>
 

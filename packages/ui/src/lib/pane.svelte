@@ -12,15 +12,15 @@
 </script>
 
 {#if $breakpoint.sm}
-  <div class="row">
+  <div class="row my-3">
     <Pagination cls="col px-0 mx-2" {pages} {page} {limit} />
     <Actions cls="col px-0 justify-content-end" bind:size {page} {limit} />
   </div>
 {:else}
-  <div class="row py-1">
+  <div class="row my-2">
     <Pagination cls="justify-content-center" {pages} {page} {limit} />
   </div>
-  <div class="row py-1">
+  <div class="row my-2">
     <Actions cls="justify-content-center" bind:size {page} {limit} />
   </div>
 {/if}

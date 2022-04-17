@@ -3,6 +3,7 @@
   import Item from "$lib/item.svelte";
   import type { Load } from "@sveltejs/kit";
   import { client, type QueryAwaited } from "$lib/trpc";
+  import { breakpoint } from "./breakpoint";
 
   export function loadFactory(page = 1, limit = 25): Load {
     return async function load({ fetch }) {
@@ -35,10 +36,15 @@
     <p>No entries found!</p>
   {/if}
   {#if size}
-    <div class="list" style={`--icon-size:${size}px`}>
+    <div
+      class="list p-0"
+      class:gapped={$breakpoint.sm}
+      style={`--icon-size:${size}px`}
+    >
       {#each entries as entry}
         {#key entry.id}
           <Item
+            cls={$breakpoint.sm ? "item-border" : ""}
             href={`/item/${entry.id}`}
             src={`http://localhost:4000/entry/${entry.id}`}
           />
@@ -54,10 +60,13 @@
 <style lang="scss">
   .list {
     display: grid;
-    padding: 0;
     grid-template-columns: repeat(
       auto-fit,
       minmax(var(--icon-size, 200px), 1fr)
     );
+  }
+  .gapped {
+    column-gap: 1em;
+    row-gap: 1em;
   }
 </style>
