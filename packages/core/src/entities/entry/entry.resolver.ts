@@ -25,12 +25,13 @@ export class EntryResolver {
         input: z.number(),
         resolve: ({ input }) => this.entrySvc.tags(input),
       })
-      .mutation("entry.tag-add", {
+      .mutation("entry.tag-edit", {
         input: z.object({
           id: z.number(),
-          tag: z.tuple([z.string(), z.string()]),
+          add: z.array(z.tuple([z.string(), z.string()])).optional(),
+          del: z.array(z.tuple([z.string(), z.string()])).optional(),
         }),
-        resolve: ({ input: { id, tag } }) => this.entrySvc.tagAdd(id, tag),
+        resolve: ({ input }) => this.entrySvc.tagEdit(input.id, input),
       });
   }
 }

@@ -7,6 +7,11 @@ import { Tag } from "../tag/tag.entity";
 import { TagRepository } from "../tag/tag.repository";
 import { Entry } from "./entry.entity";
 
+export type EntryTagEdit = {
+  add?: [string, string][];
+  del?: [string, string][];
+};
+
 @Injectable()
 export class EntryService {
   constructor(
@@ -43,19 +48,27 @@ export class EntryService {
     );
   }
 
-  async tagAdd(id: number, composite: [string, string]) {
-    const [entry, tag] = await Promise.all([
+  async tagEdit(id: number, input: EntryTagEdit) {
+    const [entry, adds, dels] = await Promise.all([
       this.entryRep.findOne(id, { populate: ["tags"] }),
-      this.tagRep.findOneOrCreate(composite),
+      Promise.all(
+        input.add?.map((tuple) => this.tagRep.findOneOrPersist(tuple)) ?? []
+      ),
+      Promise.all(
+        input.del?.map((tuple) => this.tagRep.findOneOrFail(tuple)) ?? []
+      ),
     ]);
     if (!entry) return null;
-    if (entry.tags.contains(tag)) return undefined;
-    entry.tags.add(tag);
-    const [count] = await Promise.all([
-      tag.entries.loadCount(),
-      this.entryRep.flush(),
-    ]);
-    return { ...tag, count };
+    entry.tags.add(...adds);
+    entry.tags.remove(...dels);
+    this.tagRep.flush();
+    const tags = await Promise.all(
+      [...entry.tags].map(async (tag) => ({
+        ...tag,
+        count: await tag.entries.loadCount(),
+      }))
+    );
+    return tags;
   }
 
   async stream(id: number) {

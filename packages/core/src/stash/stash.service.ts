@@ -49,10 +49,9 @@ export class StashService {
     );
     if (success.length) {
       // Attach a default tag
-      const tag = await this.tagRep.findOneOrCreate(["meta", "default"]);
-      this.entryRep.persist(success);
-      success.map((entry) => entry.tags.add(tag));
-      await this.entryRep.flush();
+      const tag = await this.tagRep.findOneOrPersist(["meta", "default"]);
+      for (const entry of success) entry.tags.add(tag);
+      await this.entryRep.persist(success).flush();
     }
     if (failure.length) console.warn("Imports failed:", failure);
     return success;

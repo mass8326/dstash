@@ -25,28 +25,49 @@
 <script lang="ts">
   export let item: NonNullable<QueryAwaited<"entry.one">>;
   export let tags: TagParse[];
+  let editing = false;
   let focused = false;
   let report: HTMLAnchorElement;
-  let val = "";
   let width: number;
-  $: placeholder = focused ? "" : "Add New Tag";
-  $: width = val ? report?.clientWidth : 125;
+
+  $: placeholder = focused ? "" : "+ Add New Tag";
+  $: width = val ? report?.clientWidth + 16 : 125; // 16px from padding
 
   // Prevents duplicate enter when attempting to close alert
-  $: disable = false && val;
-  async function submit() {
+  // Reset to false when val or checked changes
+  $: disable = false && val && checked;
+
+  let val = "";
+  async function add() {
     if (disable) return;
     disable = true;
     const { name, namespace } = undisplayify(val) ?? {};
     if (!name) return alert("Bad input!");
-    const result = await client().mutation("entry.tag-add", {
+    const result = await client().mutation("entry.tag-edit", {
       id: item.id,
-      tag: [namespace ?? "", name],
+      add: [[namespace ?? "", name]],
     });
-    if (result === null) return alert("Could not add tag!");
-    if (result === undefined) return alert("Entry already has tag!");
-    tags = [...tags, result];
+    if (!result) return alert("Could not edit tags!");
+    tags = orderTags(result);
     val = "";
+  }
+
+  let checked: boolean[] = [];
+  async function del() {
+    if (disable) return;
+    disable = true;
+    const result = await client().mutation("entry.tag-edit", {
+      id: item.id,
+      del: tags
+        .filter((_, index) => checked[index])
+        .map(
+          ({ namespace, name }) => [namespace ?? "", name] as [string, string]
+        ),
+    });
+    if (!result) return alert("Could not edit tags!");
+    tags = orderTags(result);
+    checked = Array(tags.length).fill(false);
+    editing = false;
   }
 </script>
 
@@ -61,9 +82,42 @@
   </div>
 </div>
 <div class="row my-3">
-  <div class="col text-center">
-    {#each tags as { name, namespace, count }}
-      <Tag {name} {namespace} {count} />
+  <!-- Flex to avoid whitespaces inconsistently taking space between each tag-->
+  <div
+    class="col text-center d-flex flex-wrap justify-content-center align-items-center"
+  >
+    {#if !editing}
+      <button
+        class="btn-sm rounded-pill border border-1 border m-1 text-center text-nowrap align-middle bg-light text-black-50"
+        type="button"
+        on:click={() => (editing = true)}
+      >
+        Delete Tags
+      </button>
+    {:else}
+      <button
+        class="btn-sm rounded-pill border border-1 border m-1 text-center text-nowrap align-middle bg-light text-black-50"
+        type="button"
+        on:click={() => (editing = false)}
+      >
+        Exit (No Save)
+      </button>
+      <button
+        class="btn-sm rounded-pill border border-1 border m-1 text-center text-nowrap align-middle bg-danger text-white border-0"
+        type="button"
+        on:click={del}
+      >
+        Delete Selected
+      </button>
+    {/if}
+    {#each tags as { name, namespace, count }, index}
+      <Tag
+        bind:checked={checked[index]}
+        mode={editing ? "check" : "tag"}
+        {namespace}
+        {name}
+        {count}
+      />
     {/each}
     <input
       class="btn-sm rounded-pill border border-1 border bg-light m-1 text-center text-nowrap align-middle"
@@ -72,8 +126,8 @@
       bind:value={val}
       on:focus={() => (focused = true)}
       on:blur={() => (focused = false)}
-      on:keyup={(e) => e.key === "Enter" && submit()}
-      style:width={width + 20 + "px"}
+      on:keyup={(e) => e.key === "Enter" && add()}
+      style:width={width + "px"}
     />
   </div>
 </div>

@@ -3,20 +3,32 @@
 </script>
 
 <script lang="ts">
+  // Styling
   export let cls = "";
+  // Data
   export let count: string | number = "";
   export let namespace: string | undefined = undefined;
   export let name: string;
-  export let report: HTMLAnchorElement | undefined = undefined;
+  // Feedback
+  export let mode: "check" | "tag" = "tag";
+  export let checked = false;
+  export let report: Element | undefined = undefined;
+
+  $: type = mode === "check" ? "label" : "a";
 </script>
 
-<a
+<!-- eslint + svelte doesn't support svelte:element yet, use --no-verify -->
+<svelte:element
+  this={type}
   bind:this={report}
   class={"btn btn-sm rounded-pill bg-primary text-light m-1 text-nowrap " + cls}
   href={"/tag/" + slugify(name, namespace)}
 >
+  {#if mode === "check"}
+    <input type="checkbox" bind:checked value={slugify(name, namespace)} />
+  {/if}
   {displayify(name, namespace)}
   {#if count}
     <span class="badge bg-light text-dark">{count}</span>
   {/if}
-</a>
+</svelte:element>

@@ -29,7 +29,7 @@ export function displayify(name: string, namespace?: string): string {
 export function undisplayify(display: string): TagParse | null {
   const arr = display.split(":");
   if (![1, 2].includes(arr.length)) return null;
-  return { name: arr.pop()!, namespace: arr.pop() };
+  return { name: arr[0], namespace: arr[1] };
 }
 
 // Slug
@@ -41,5 +41,5 @@ export function slugify(name: string, namespace?: string): string {
 export function unslugify(slug: string): TagParse | null {
   const arr = slug.split(".").map((str) => str.replace("_", " "));
   if (![1, 2].includes(arr.length)) return null;
-  return { name: arr.pop()!, namespace: arr.pop() };
+  return { name: arr[0], namespace: arr[1] };
 }

@@ -10,12 +10,12 @@ importers:
       commitlint: ^16.2.3
       dotenv-cli: ^5.0.0
       dstash-config: workspace:*
-      eslint: ^8.8.0
+      eslint: ^8.11.0
       gulp: ^4.0.2
       license-checker: ^25.0.1
       lint-staged: ^12.3.7
       prettier: ^2.6.0
-      svelte: ^3.46.4
+      svelte: ^3.47.0
       turbo: ^1.2.4
     devDependencies:
       '@commitlint/config-conventional': 16.2.1
@@ -29,7 +29,7 @@ importers:
       license-checker: 25.0.1
       lint-staged: 12.3.7
       prettier: 2.6.0
-      svelte: 3.46.4
+      svelte: 3.47.0
       turbo: 1.2.4
 
   packages/config:
@@ -47,9 +47,9 @@ importers:
       '@typescript-eslint/parser': 5.15.0_eslint@8.11.0+typescript@4.6.3
       eslint-config-prettier: 8.5.0_eslint@8.11.0
       eslint-plugin-import: 2.25.4_eslint@8.11.0
-      eslint-plugin-svelte3: 3.4.1_eslint@8.11.0+svelte@3.46.4
+      eslint-plugin-svelte3: 3.4.1_eslint@8.11.0+svelte@3.47.0
       eslint-plugin-unicorn: 41.0.1_eslint@8.11.0
-      prettier-plugin-svelte: 2.6.0_prettier@2.6.0+svelte@3.46.4
+      prettier-plugin-svelte: 2.6.0_prettier@2.6.0+svelte@3.47.0
       typescript: 4.6.3
 
   packages/core:
@@ -2511,8 +2511,8 @@ packages:
       '@types/yargs-parser': 21.0.0
     dev: true
 
-  /@types/yauzl/2.9.2:
-    resolution: {integrity: sha512-8uALY5LTvSuHgloDVUvWP3pIauILm+8/0pDMokuDYIoNsOkSwd5AiHBTSEJjKTDcZr5z8UpgOWZkxBF4iJftoA==}
+  /@types/yauzl/2.10.0:
+    resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
       '@types/node': 17.0.22
@@ -4916,7 +4916,7 @@ packages:
       tsconfig-paths: 3.14.0
     dev: true
 
-  /eslint-plugin-svelte3/3.4.1_eslint@8.11.0+svelte@3.46.4:
+  /eslint-plugin-svelte3/3.4.1_eslint@8.11.0+svelte@3.47.0:
     resolution: {integrity: sha512-7p59WG8qV8L6wLdl4d/c3mdjkgVglQCdv5XOTk/iNPBKXuuV+Q0eFP5Wa6iJd/G2M1qR3BkLPEzaANOqKAZczw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -4924,7 +4924,7 @@ packages:
       svelte: ^3.2.0
     dependencies:
       eslint: 8.11.0
-      svelte: 3.46.4
+      svelte: 3.47.0
     dev: true
 
   /eslint-plugin-unicorn/41.0.1_eslint@8.11.0:
@@ -5281,7 +5281,7 @@ packages:
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
-      '@types/yauzl': 2.9.2
+      '@types/yauzl': 2.10.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8972,16 +8972,6 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /prettier-plugin-svelte/2.6.0_prettier@2.6.0+svelte@3.46.4:
-    resolution: {integrity: sha512-NPSRf6Y5rufRlBleok/pqg4+1FyGsL0zYhkYP6hnueeL1J/uCm3OfOZPsLX4zqD9VAdcXfyEL2PYqGv8ZoOSfA==}
-    peerDependencies:
-      prettier: ^1.16.4 || ^2.0.0
-      svelte: ^3.2.0
-    dependencies:
-      prettier: 2.6.0
-      svelte: 3.46.4
-    dev: true
-
   /prettier-plugin-svelte/2.6.0_prettier@2.6.0+svelte@3.47.0:
     resolution: {integrity: sha512-NPSRf6Y5rufRlBleok/pqg4+1FyGsL0zYhkYP6hnueeL1J/uCm3OfOZPsLX4zqD9VAdcXfyEL2PYqGv8ZoOSfA==}
     peerDependencies:
@@ -10394,11 +10384,6 @@ packages:
       strip-indent: 3.0.0
       svelte: 3.47.0
       typescript: 4.6.3
-    dev: true
-
-  /svelte/3.46.4:
-    resolution: {integrity: sha512-qKJzw6DpA33CIa+C/rGp4AUdSfii0DOTCzj/2YpSKKayw5WGSS624Et9L1nU1k2OVRS9vaENQXp2CVZNU+xvIg==}
-    engines: {node: '>= 8'}
     dev: true
 
   /svelte/3.47.0:
