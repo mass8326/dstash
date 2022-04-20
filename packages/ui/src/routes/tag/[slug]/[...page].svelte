@@ -2,7 +2,7 @@
   import List from "$lib/list.svelte";
   import { client, type QueryAwaited } from "$lib/trpc";
   import { page as route } from "$app/stores";
-  import { unslugify } from "$lib/tag";
+  import * as util from "dstash-util";
   import type { Load } from "@sveltejs/kit";
   import { parsePage } from "$lib/pagination.svelte";
   import { defaultLimit, parseLimit } from "$lib/actions.svelte";
@@ -12,7 +12,7 @@
   export const load: Load = async ({ params, url, fetch }) => {
     const page = parsePage(params.page);
     if (!page) return { status: 400, error: "Page malformed" };
-    const { namespace, name } = unslugify(params.slug) ?? {};
+    const { namespace, name } = util.tag.unslugify(params.slug) ?? {};
     if (!name) return { status: 400, error: "Tag malformed" };
     const tag = [namespace ?? "", name] as [string, string];
     const limit = parseLimit(url.searchParams) ?? defaultLimit;

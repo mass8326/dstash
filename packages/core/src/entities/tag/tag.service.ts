@@ -1,7 +1,7 @@
 import { EntityRepository } from "@mikro-orm/core";
 import { InjectRepository } from "@mikro-orm/nestjs";
 import { Injectable } from "@nestjs/common";
-import util from "dstash-util";
+import * as util from "dstash-util";
 import { Tag } from "./tag.entity";
 
 @Injectable()

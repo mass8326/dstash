@@ -1,14 +1,16 @@
 import { defineConfig } from "rollup";
-import commonjs from "@rollup/plugin-commonjs";
+import { optimizeLodashImports } from "@optimize-lodash/rollup-plugin";
 import esbuild from "rollup-plugin-esbuild";
 
 export default defineConfig([
   {
     input: "src/index.ts",
-    output: [
-      { file: "dist/index.mjs", format: "esm" },
-      { file: "dist/index.cjs", format: "cjs" },
-    ],
-    plugins: [commonjs(), esbuild()],
+    output: { dir: "dist/esm", format: "es", preserveModules: true },
+    plugins: [esbuild(), optimizeLodashImports({ useLodashEs: true })],
+  },
+  {
+    input: "src/index.ts",
+    output: { dir: "dist/cjs", format: "cjs", preserveModules: true },
+    plugins: [esbuild(), optimizeLodashImports()],
   },
 ]);

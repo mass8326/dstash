@@ -1,5 +1,5 @@
 import type { ListIteratee, Many } from "lodash";
-import orderBy from "lodash/orderBy";
+import { orderBy } from "lodash";
 
 export type TagParse = {
   namespace?: string;

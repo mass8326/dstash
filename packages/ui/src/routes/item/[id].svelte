@@ -2,7 +2,7 @@
   import { client, type QueryAwaited } from "$lib/trpc";
   import type { Load } from "@sveltejs/kit";
   import Tag from "$lib/component/tag.svelte";
-  import { orderTags, undisplayify, type TagParse } from "$lib/tag";
+  import * as util from "dstash-util";
   import { RejectedNullError, rejectNull } from "$lib/util";
 
   export const load: Load = async ({ params, fetch }) => {
@@ -14,7 +14,7 @@
         client({ fetch }).query("entry.one", id).then(rejectNull),
         client({ fetch }).query("entry.tags", id).then(rejectNull),
       ]);
-      return { props: { item, tags: orderTags(tags) } };
+      return { props: { item, tags: util.tag.orderTags(tags) } };
     } catch (e) {
       if (!(e instanceof RejectedNullError)) throw e;
       return { status: 404, error: "Item ID was not found" };
@@ -24,7 +24,7 @@
 
 <script lang="ts">
   export let item: NonNullable<QueryAwaited<"entry.one">>;
-  export let tags: TagParse[];
+  export let tags: util.tag.TagParse[];
   let editing = false;
   let focused = false;
   let report: HTMLAnchorElement;
@@ -41,14 +41,14 @@
   async function add() {
     if (disable) return;
     disable = true;
-    const { name, namespace } = undisplayify(val) ?? {};
+    const { name, namespace } = util.tag.undisplayify(val) ?? {};
     if (!name) return alert("Bad input!");
     const result = await client().mutation("entry.tag-edit", {
       id: item.id,
       add: [[namespace ?? "", name]],
     });
     if (!result) return alert("Could not edit tags!");
-    tags = orderTags(result);
+    tags = util.tag.orderTags(result);
     val = "";
   }
 
@@ -65,7 +65,7 @@
         ),
     });
     if (!result) return alert("Could not edit tags!");
-    tags = orderTags(result);
+    tags = util.tag.orderTags(result);
     checked = Array(tags.length).fill(false);
     editing = false;
   }

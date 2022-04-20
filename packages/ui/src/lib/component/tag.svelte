@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { displayify, slugify } from "$lib/tag";
+  import * as util from "dstash-util";
 </script>
 
 <script lang="ts">
@@ -22,12 +22,16 @@
   this={type}
   bind:this={report}
   class={"btn btn-sm rounded-pill bg-primary text-light m-1 text-nowrap " + cls}
-  href={"/tag/" + slugify(name, namespace)}
+  href={"/tag/" + util.tag.slugify(name, namespace)}
 >
   {#if mode === "check"}
-    <input type="checkbox" bind:checked value={slugify(name, namespace)} />
+    <input
+      type="checkbox"
+      bind:checked
+      value={util.tag.slugify(name, namespace)}
+    />
   {/if}
-  {displayify(name, namespace)}
+  {util.tag.displayify(name, namespace)}
   {#if count}
     <span class="badge bg-light text-dark">{count}</span>
   {/if}

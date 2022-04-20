@@ -1,19 +1,20 @@
 {
   "name": "dstash-util",
   "version": "0.0.1",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "types": "src/index.ts",
   "scripts": {
     "dev": "rollup -cw",
     "build": "rollup -c"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.0.2",
+    "@optimize-lodash/rollup-plugin": "^3.0.0",
     "@types/lodash": "^4.14.180",
     "dstash-config": "workspace:*",
     "esbuild": "^0.14.27",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "rollup": "^2.70.1",
     "rollup-plugin-esbuild": "^4.9.1",
     "typescript": "^4.6.3"

@@ -203,20 +203,22 @@ importers:
 
   packages/util:
     specifiers:
-      '@rollup/plugin-commonjs': ^21.0.2
+      '@optimize-lodash/rollup-plugin': ^3.0.0
       '@types/lodash': ^4.14.180
       dstash-config: workspace:*
       esbuild: ^0.14.27
       lodash: ^4.17.21
+      lodash-es: ^4.17.21
       rollup: ^2.70.1
       rollup-plugin-esbuild: ^4.9.1
       typescript: ^4.6.3
     devDependencies:
-      '@rollup/plugin-commonjs': 21.0.2_rollup@2.70.1
+      '@optimize-lodash/rollup-plugin': 3.0.0_rollup@2.70.1
       '@types/lodash': 4.14.180
       dstash-config: link:../config
       esbuild: 0.14.27
       lodash: 4.17.21
+      lodash-es: 4.17.21
       rollup: 2.70.1
       rollup-plugin-esbuild: 4.9.1_esbuild@0.14.27+rollup@2.70.1
       typescript: 4.6.3
@@ -1860,6 +1862,25 @@ packages:
     transitivePeerDependencies:
       - encoding
     dev: false
+
+  /@optimize-lodash/rollup-plugin/3.0.0_rollup@2.70.1:
+    resolution: {integrity: sha512-UVu7ezKoQUFuDCLErh6ZCpr1nwK8iELwt1MutXWE6B6c2wvdwPlX74Xq/2/xcELmTttt8I7nkwF7mT7/D6zgOQ==}
+    engines: {node: '>= 12'}
+    peerDependencies:
+      rollup: 2.x
+    dependencies:
+      '@optimize-lodash/transform': 3.0.0
+      '@rollup/pluginutils': 4.2.0
+      rollup: 2.70.1
+    dev: true
+
+  /@optimize-lodash/transform/3.0.0:
+    resolution: {integrity: sha512-w5cuqlbFdMgkPpSuGnsiMNfjOaXBKkxnBNHThTQQ8drdxeMzCsUlQMQITMo4t3+mPFR8NIA2rlxF0GRJSYqBuw==}
+    engines: {node: '>= 12'}
+    dependencies:
+      estree-walker: 2.0.2
+      magic-string: 0.25.9
+    dev: true
 
   /@playwright/test/1.20.0:
     resolution: {integrity: sha512-UpI5HTcgNLckR0kqXqwNvbcIXtRaDxk+hnO0OBwPSjfbBjRfRgAJ2ClA/b30C5E3UW5dJa17zhsy2qrk66l5cg==}
