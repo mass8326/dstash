@@ -4,8 +4,11 @@
   import Tag from "$lib/component/tag.svelte";
   import { sortBy } from "lodash-es";
 
-  export const load: Load = async ({ fetch }) => {
-    const tags = await client({ fetch }).query("tag.all");
+  export const load: Load = async ({ fetch, url }) => {
+    const query = url.searchParams.get("q");
+    const tags = query
+      ? await client({ fetch }).query("tag.search", query)
+      : await client({ fetch }).query("tag.all");
     return { props: { tags } };
   };
 </script>
@@ -16,6 +19,7 @@
 
 <div class="row">
   <div class="col">
+    {#if !tags.length}<p>No tags found!</p>{/if}
     {#each sortBy(tags, "count").reverse() as { name, namespace, count }}
       <Tag {name} {namespace} {count} />
     {/each}

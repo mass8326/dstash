@@ -25,6 +25,10 @@ export class TagResolver {
         }),
         resolve: ({ input }) =>
           this.tagSvc.entries(input.tag, input.limit, input.offset),
+      })
+      .query("tag.search", {
+        input: z.string(),
+        resolve: ({ input }) => this.tagSvc.search(input),
       });
   }
 }

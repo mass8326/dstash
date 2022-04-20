@@ -5,6 +5,7 @@ import { Injectable } from "@nestjs/common";
 import { createReadStream } from "fs-extra";
 import { Tag } from "../tag/tag.entity";
 import { TagRepository } from "../tag/tag.repository";
+import { TagService } from "../tag/tag.service";
 import { Entry } from "./entry.entity";
 
 export type EntryTagEdit = {
@@ -16,7 +17,8 @@ export type EntryTagEdit = {
 export class EntryService {
   constructor(
     @InjectRepository(Entry) private entryRep: EntityRepository<Entry>,
-    @InjectRepository(Tag) private tagRep: TagRepository
+    @InjectRepository(Tag) private tagRep: TagRepository,
+    private tagSvc: TagService
   ) {}
 
   one(id: number) {
@@ -40,12 +42,7 @@ export class EntryService {
     const entry = await this.entryRep.findOne(id);
     if (!entry) return null;
     const tags = await entry.tags.loadItems();
-    return Promise.all(
-      tags.map(async (tag) => ({
-        ...tag,
-        count: await tag.entries.loadCount(),
-      }))
-    );
+    return Promise.all(tags.map(this.tagSvc.injectCount));
   }
 
   async tagEdit(id: number, input: EntryTagEdit) {
