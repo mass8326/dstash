@@ -1,4 +1,5 @@
 import type { BetterSqliteDriver } from "@mikro-orm/better-sqlite";
+import { homedir } from "os";
 import { resolve, basename } from "path";
 import { MigrationsOptions, Options } from "@mikro-orm/core";
 import { Migration } from "@mikro-orm/migrations";
@@ -6,7 +7,7 @@ import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
 
 const dbName = process.env.STASH_DIR
   ? resolve(process.env.STASH_DIR, "data.db")
-  : "dev.db";
+  : resolve(homedir(), ".dstash/data.db");
 
 const migrations: MigrationsOptions = module.hot
   ? // Webpack development server config

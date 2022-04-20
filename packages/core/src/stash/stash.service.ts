@@ -1,22 +1,31 @@
 import crypto from "crypto";
-import { join, resolve } from "path";
+import { dirname, join, resolve } from "path";
 import { EntityRepository } from "@mikro-orm/better-sqlite";
+import { MikroORM } from "@mikro-orm/core";
 import { InjectRepository } from "@mikro-orm/nestjs";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import fs from "fs-extra";
 import { Entry } from "../entities/entry/entry.entity";
 import { Tag } from "../entities/tag/tag.entity";
 import { TagRepository } from "../entities/tag/tag.repository";
 
+const logger = new Logger("Stash");
+
 @Injectable()
 export class StashService {
   constructor(
     @InjectRepository(Entry) private entryRep: EntityRepository<Entry>,
-    @InjectRepository(Tag) private tagRep: TagRepository
+    @InjectRepository(Tag) private tagRep: TagRepository,
+    private orm: MikroORM
   ) {}
 
   async consume() {
-    const root = resolve(process.env.STASH_DIR ?? "sample");
+    const db = this.orm.config.get("dbName");
+    if (!db) {
+      logger.warn("Stash directory not set!");
+      return [];
+    }
+    const root = resolve(dirname(db) ?? "sample");
     const dropoff = join(root, "dropoff");
     const stashed = join(root, "stashed");
     const files = await fs.readdir(dropoff);

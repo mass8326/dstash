@@ -1,6 +1,7 @@
 import { MikroOrmModule } from "@mikro-orm/nestjs";
 import { Module } from "@nestjs/common";
 import config from "../mikro-orm.config";
+import { DatabaseResolver } from "./database.resolver";
 import { DatabaseService } from "./database.service";
 
 @Module({
@@ -13,6 +14,7 @@ import { DatabaseService } from "./database.service";
       autoLoadEntities: true,
     }),
   ],
-  providers: [DatabaseService],
+  providers: [DatabaseService, DatabaseResolver],
+  exports: [DatabaseResolver],
 })
 export class DatabaseModule {}
