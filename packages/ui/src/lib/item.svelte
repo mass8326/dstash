@@ -1,62 +1,39 @@
 <script lang="ts">
-  export let cls = "";
   export let src: string;
   export let href: string;
 </script>
 
-<div class={"item " + cls}>
-  <input class="check" type="checkbox" />
-  <img class="bg" {src} alt="" />
-  <a class="link" {href}>
-    <img class="thumbnail" {src} alt="" />
+<div
+  class="tw-relative tw-overflow-hidden tw-aspect-square sm:tw-border tw-border-slate-300 hover:tw-border-slate-400 hover:tw-bg-slate-100/50"
+>
+  <input class="check tw-absolute tw-m-1" type="checkbox" />
+  <img class="bg tw-hidden sm:tw-block" {src} alt="" />
+  <a
+    class="tw-h-full tw-w-full tw-flex tw-justify-center tw-items-center"
+    {href}
+  >
+    <img
+      class={`tw-object-cover tw-h-full tw-w-full sm:tw-max-h-full sm:tw-h-auto sm:tw-w-auto`}
+      {src}
+      alt=""
+    />
   </a>
 </div>
 
 <style lang="scss">
-  .item-border {
-    border: 1px solid #ddd;
+  .bg {
+    position: absolute;
+    height: calc(100% + 2em);
+    width: calc(100% + 2em);
+    filter: blur(1em);
+    opacity: 0.5;
+    z-index: -1;
   }
-  .item {
-    aspect-ratio: 1/1;
-
-    // Background
-    position: relative;
-    overflow: hidden;
-    &:hover {
-      background-color: #eee9;
-      border: 1px solid #999;
-    }
-    .bg {
-      position: absolute;
-      height: calc(100% + 2em);
-      width: calc(100% + 2em);
-      filter: blur(1em);
-      opacity: 0.5;
-      z-index: -1;
-    }
-    &:hover .check,
-    .check:checked {
+  .check {
+    visibility: hidden;
+    :hover &,
+    &:checked {
       visibility: visible;
-    }
-    .check {
-      visibility: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      margin: 0.25em;
-    }
-    .link {
-      height: 100%;
-      width: 100%;
-
-      // Flex children
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .thumbnail {
-        max-height: 100%;
-        max-width: 100%;
-      }
     }
   }
 </style>

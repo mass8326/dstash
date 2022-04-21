@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
-  import Size from "$lib/size.svelte";
+  import { breakpoint } from "./breakpoint";
+  import { goto } from "$app/navigation";
 
   export const defaultLimit = 25;
   export function parseLimit(params: URLSearchParams) {
@@ -10,32 +11,50 @@
 </script>
 
 <script lang="ts">
-  export let cls = "";
   export let page: number;
-  export let size: number;
   export let limit: number;
   export let base: string;
+  export let size = 200;
 
   const limits = [25, 50, 100];
-  $: link = function (lim: number) {
+  $: link = (lim: number) => () => {
     const offset = (page - 1) * limit + 1;
     const target = Math.ceil(offset / lim) || 1;
     const append = lim === defaultLimit ? "" : `?lim=${lim}`;
-    return `${base}/${target}${append}`;
+    goto(`${base}/${target}${append}`);
   };
+
+  $: size = sizeArr[sizeInd];
+  $: sizeArr = [100, 150, 200, 300, 450, 600].map(
+    (sz) => sz / ($breakpoint.sm ? 1 : 1.25)
+  );
+  let sizeInd = 2;
+  function bigger() {
+    if (sizeInd < sizeArr.length - 1) sizeInd++;
+  }
+  function smaller() {
+    if (sizeInd > 0) sizeInd--;
+  }
 </script>
 
-<div class={"d-flex align-items-center " + cls}>
-  <div class={"btn-group " + cls}>
+<div class="tw-flex tw-gap-2">
+  <div class="btn-group btn-group-sm">
     {#each limits as lim}
-      <a
-        class="btn btn-sm btn-primary flex-grow-0"
+      <button
+        class="btn btn-sm btn-primary tw-align-middle"
         class:active={limit === lim}
-        href={limit === lim ? "#" : link(lim)}
+        on:click={link(lim)}
       >
         {lim}
-      </a>
+      </button>
     {/each}
   </div>
-  <Size cls="mx-2 text-nowrap" bind:size />
+  <div class="btn-group btn-group-sm tw-whitespace-nowrap">
+    <button class="btn btn-sm btn-primary" on:click={smaller}>
+      {#if $breakpoint.md} Icons Smaller {:else} Icons - {/if}
+    </button>
+    <button class="btn btn-sm btn-primary" on:click={bigger}>
+      {#if $breakpoint.md} Icons Bigger {:else} Icons + {/if}
+    </button>
+  </div>
 </div>

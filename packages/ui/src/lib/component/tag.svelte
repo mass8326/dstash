@@ -21,7 +21,7 @@
 <svelte:element
   this={type}
   bind:this={report}
-  class={"btn btn-sm rounded-pill bg-primary text-light m-1 text-nowrap " + cls}
+  class="btn btn-sm btn-primary tw-rounded-full tw-m-1"
   href={"/tag/" + util.tag.slugify(name, namespace)}
 >
   {#if mode === "check"}
@@ -32,7 +32,7 @@
     />
   {/if}
   {util.tag.displayify(name, namespace)}
-  {#if count}
+  {#if count != null}
     <span class="badge bg-light text-dark">{count}</span>
   {/if}
 </svelte:element>

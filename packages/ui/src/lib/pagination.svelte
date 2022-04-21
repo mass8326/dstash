@@ -14,7 +14,6 @@
 </script>
 
 <script lang="ts">
-  export let cls = "";
   export let pages = 0;
   export let page = 0;
   export let base: string;
@@ -30,7 +29,7 @@
   };
 </script>
 
-<div class={"pagination px-0 text-nowrap " + cls}>
+<div class="pagination tw-inline-flex tw-justify-center tw-whitespace-nowrap">
   <li class="page-item" class:disabled={page <= 1 || pages === 0}>
     <a class="page-link" href={link(1)} aria-label="First">
       <span aria-hidden="true">&laquo</span>

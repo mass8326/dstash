@@ -2,7 +2,6 @@
   import Pane from "$lib/pane.svelte";
   import Item from "$lib/item.svelte";
   import type { QueryAwaited } from "$lib/trpc";
-  import { breakpoint } from "./breakpoint";
 </script>
 
 <script lang="ts">
@@ -24,15 +23,10 @@
     <p>No entries found!</p>
   {/if}
   {#if size}
-    <div
-      class="list p-0"
-      class:gapped={$breakpoint.sm}
-      style={`--icon-size:${size}px`}
-    >
+    <div style={`--icon-size:${size}px`} class="list p-0 sm:tw-gap-3">
       {#each entries as entry}
         {#key entry.id}
           <Item
-            cls={$breakpoint.sm ? "item-border" : ""}
             href={`/item/${entry.id}`}
             src={`http://localhost:4000/entry/${entry.id}`}
           />
