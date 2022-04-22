@@ -5,9 +5,9 @@ import { MigrationsOptions, Options } from "@mikro-orm/core";
 import { Migration } from "@mikro-orm/migrations";
 import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
 
-const dbName = process.env.STASH_DIR
-  ? resolve(process.env.STASH_DIR, "data.db")
-  : resolve(homedir(), ".dstash/data.db");
+export const STD_PATH = resolve(homedir(), ".dstash");
+export const STD_META = resolve(STD_PATH, "meta.json");
+export const STD_DATA = resolve(STD_PATH, "data.db");
 
 const migrations: MigrationsOptions = module.hot
   ? // Webpack development server config
@@ -29,7 +29,7 @@ const migrations: MigrationsOptions = module.hot
 
 const config: Options<BetterSqliteDriver> = {
   // Database
-  dbName,
+  dbName: STD_DATA,
   type: "better-sqlite",
   migrations,
   // Entities for CLI

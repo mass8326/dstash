@@ -1,5 +1,5 @@
 import { join } from "path";
-import { EntityRepository } from "@mikro-orm/core";
+import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { InjectRepository } from "@mikro-orm/nestjs";
 import { Injectable } from "@nestjs/common";
 import { createReadStream } from "fs-extra";
@@ -18,7 +18,8 @@ export class EntryService {
   constructor(
     @InjectRepository(Entry) private entryRep: EntityRepository<Entry>,
     @InjectRepository(Tag) private tagRep: TagRepository,
-    private tagSvc: TagService
+    private tagSvc: TagService,
+    private orm: MikroORM
   ) {}
 
   one(id: number) {
@@ -72,7 +73,7 @@ export class EntryService {
     const entry = await this.entryRep.findOne({ id });
     if (!entry) return null;
     return createReadStream(
-      join(process.env.STASH_DIR ?? "sample", "stashed", entry?.path)
+      join(this.orm.config.get("dbName"), "../stashed", entry?.path)
     );
   }
 }
